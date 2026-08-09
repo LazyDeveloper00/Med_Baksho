@@ -34,6 +34,8 @@ class ApprovalService:
 
     @transaction.atomic
     def approve_doctor(self, admin: Admin, doctor: Doctor, comments: str = "") -> Doctor:
+        if doctor.verification_status != "Pending":
+            raise ValueError("Only Pending doctor registrations can be approved.")
         doctor.verification_status = "Approved"
         doctor.verified_by_admin = admin
         doctor.verified_at = timezone.now()
@@ -43,6 +45,8 @@ class ApprovalService:
 
     @transaction.atomic
     def reject_doctor(self, admin: Admin, doctor: Doctor, comments: str = "") -> Doctor:
+        if doctor.verification_status != "Pending":
+            raise ValueError("Only Pending doctor registrations can be rejected.")
         doctor.verification_status = "Rejected"
         doctor.verified_by_admin = admin
         doctor.verified_at = timezone.now()

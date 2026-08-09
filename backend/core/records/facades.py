@@ -10,6 +10,18 @@ from core.models import Patient, PatientDisease, Prescription
 from core.records.builders import PrescriptionBuilder
 
 
+def _optional_positive_int(value, field_name: str):
+    if value in (None, ""):
+        return None
+    try:
+        result = int(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{field_name} must be an integer.") from exc
+    if result <= 0:
+        raise ValueError(f"{field_name} must be greater than zero.")
+    return result
+
+
 class MedicalRecordFacade:
     """Facade Pattern: one simple API for medical-record workflows."""
 
@@ -79,6 +91,10 @@ class MedicalRecordFacade:
         facility_id: str | None = None,
     ) -> QuerySet:
         queryset = MedicalRecordFacade.patient_prescriptions(patient)
+        disease_id = _optional_positive_int(disease_id, "disease_id")
+        medicine_id = _optional_positive_int(medicine_id, "medicine_id")
+        test_id = _optional_positive_int(test_id, "test_id")
+        facility_id = _optional_positive_int(facility_id, "facility_id")
         if disease_id:
             queryset = queryset.filter(patient_disease__disease_id=disease_id)
         if medicine_id:

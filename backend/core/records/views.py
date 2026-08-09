@@ -1,12 +1,33 @@
+from datetime import date, datetime
+
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from core.decorators import role_required
 from core.http import fail, ok, parse_json_list, read_payload
-from core.models import Disease, MedicineSubmission, PatientDisease, Prescription
+from core.models import (
+    Disease,
+    MedicalFacility,
+    MedicalTest,
+    Medicine,
+    MedicineSubmission,
+    PatientDisease,
+    Prescription,
+)
 from core.records.facades import MedicalRecordFacade
 from core.serializers import patient_disease_dict, prescription_dict, submission_dict
+
+
+def _optional_date(value, field_name: str):
+    if value in (None, ""):
+        return None
+    if isinstance(value, date) and not isinstance(value, datetime):
+        return value
+    try:
+        return date.fromisoformat(str(value))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{field_name} must use YYYY-MM-DD format.") from exc
 
 
 @require_GET
@@ -22,11 +43,18 @@ def disease_records(request):
 def disease_create(request):
     try:
         data = read_payload(request)
-        disease = Disease.objects.get(disease_id=data["disease_id"], is_active=True)
+        try:
+            disease_id = int(data["disease_id"])
+        except (TypeError, ValueError) as exc:
+            raise ValueError("disease_id must be an integer.") from exc
+        diagnosed_date = _optional_date(data.get("diagnosed_date"), "diagnosed_date")
+        if diagnosed_date and diagnosed_date > date.today():
+            raise ValueError("diagnosed_date cannot be in the future.")
+        disease = Disease.objects.get(disease_id=disease_id, is_active=True)
         item = PatientDisease.objects.create(
             patient=request.patient,
             disease=disease,
-            diagnosed_date=data.get("diagnosed_date") or None,
+            diagnosed_date=diagnosed_date,
             current_status=(data.get("current_status") or "Active").strip(),
             custom_disease_name=(data.get("custom_disease_name") or "").strip() or None,
             notes=(data.get("notes") or "").strip() or None,
@@ -34,6 +62,8 @@ def disease_create(request):
         return ok(patient_disease_dict(item), 201)
     except KeyError as exc:
         return fail(f"Missing required field: {exc.args[0]}", 400)
+    except ValueError as exc:
+        return fail(str(exc), 400)
     except Disease.DoesNotExist:
         return fail("Disease not found or inactive.", 404)
 
@@ -86,8 +116,12 @@ def prescription_create(request):
         return fail(str(exc), 400)
     except PatientDisease.DoesNotExist:
         return fail("Patient-disease record not found.", 404)
-    except Disease.DoesNotExist:
-        return fail("Selected disease not found.", 404)
+    except MedicalFacility.DoesNotExist:
+        return fail("Selected medical facility was not found or is inactive.", 404)
+    except Medicine.DoesNotExist:
+        return fail("Selected medicine was not found or is inactive.", 404)
+    except MedicalTest.DoesNotExist:
+        return fail("Selected medical test was not found or is inactive.", 404)
 
 
 @require_GET
@@ -105,14 +139,17 @@ def prescription_detail(request, prescription_id: int):
 @require_GET
 @role_required("patient")
 def prescription_search(request):
-    queryset = MedicalRecordFacade.search(
-        patient=request.patient,
-        disease_id=request.GET.get("disease_id"),
-        medicine_id=request.GET.get("medicine_id"),
-        test_id=request.GET.get("test_id"),
-        facility_id=request.GET.get("facility_id"),
-    )
-    return ok([prescription_dict(item) for item in queryset])
+    try:
+        queryset = MedicalRecordFacade.search(
+            patient=request.patient,
+            disease_id=request.GET.get("disease_id"),
+            medicine_id=request.GET.get("medicine_id"),
+            test_id=request.GET.get("test_id"),
+            facility_id=request.GET.get("facility_id"),
+        )
+        return ok([prescription_dict(item) for item in queryset])
+    except ValueError as exc:
+        return fail(str(exc), 400)
 
 
 @csrf_exempt

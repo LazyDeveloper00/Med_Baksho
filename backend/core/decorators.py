@@ -23,6 +23,9 @@ def _attach_identity(request: HttpRequest) -> bool:
             request.patient = Patient.objects.get(p_id=role_id, user=request.client)
         elif role == "doctor":
             request.doctor = Doctor.objects.get(d_id=role_id, user=request.client)
+            if (request.doctor.verification_status or "").strip().lower() != "approved":
+                request.session.flush()
+                return False
         elif role == "admin":
             request.admin = Admin.objects.get(a_id=role_id, user=request.client)
         else:

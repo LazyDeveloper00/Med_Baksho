@@ -15,6 +15,26 @@ from core.models import (
     TestCategory,
 )
 
+def _required_text(data, field_name: str) -> str:
+    value = str(data.get(field_name, "")).strip()
+    if not value:
+        raise ValueError(f"{field_name} cannot be empty.")
+    return value
+
+
+def _parse_bool(value) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int) and value in {0, 1}:
+        return bool(value)
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"1", "true", "yes", "on"}:
+            return True
+        if normalized in {"0", "false", "no", "off"}:
+            return False
+    raise ValueError("is_active must be true or false.")
+
 
 @require_GET
 def list_master_data(request):
@@ -61,12 +81,12 @@ def create_master_data(request, entity: str):
         data = read_payload(request)
         if entity == "disease":
             item = Disease.objects.create(
-                disease_name=str(data["disease_name"]).strip(), is_active=True
+                disease_name=_required_text(data, "disease_name"), is_active=True
             )
             result = {"disease_id": item.disease_id, "disease_name": item.disease_name}
         elif entity == "facility-type":
             item = MedicalFacilityType.objects.create(
-                facility_type_name=str(data["facility_type_name"]).strip()
+                facility_type_name=_required_text(data, "facility_type_name")
             )
             result = {
                 "facility_type_id": item.facility_type_id,
@@ -77,31 +97,31 @@ def create_master_data(request, entity: str):
                 facility_type_id=int(data["facility_type_id"])
             )
             item = MedicalFacility.objects.create(
-                facility_name=str(data["facility_name"]).strip(),
+                facility_name=_required_text(data, "facility_name"),
                 facility_type=facility_type,
                 is_active=True,
             )
             result = {"facility_id": item.facility_id, "facility_name": item.facility_name}
         elif entity == "medicine-brand":
             item = MedicineBrand.objects.create(
-                brand_name=str(data["brand_name"]).strip()
+                brand_name=_required_text(data, "brand_name")
             )
             result = {"brand_id": item.brand_id, "brand_name": item.brand_name}
         elif entity == "medicine-type":
             item = MedicineType.objects.create(
-                med_type_name=str(data["med_type_name"]).strip()
+                med_type_name=_required_text(data, "med_type_name")
             )
             result = {"med_type_id": item.med_type_id, "med_type_name": item.med_type_name}
         elif entity == "test-category":
             item = TestCategory.objects.create(
-                category_name=str(data["category_name"]).strip(), is_active=True
+                category_name=_required_text(data, "category_name"), is_active=True
             )
             result = {"category_id": item.category_id, "category_name": item.category_name}
         elif entity == "medical-test":
             category = TestCategory.objects.get(category_id=int(data["category_id"]))
             item = MedicalTest.objects.create(
                 category=category,
-                test_name=str(data["test_name"]).strip(),
+                test_name=_required_text(data, "test_name"),
                 description=(data.get("description") or "").strip() or None,
                 is_active=True,
             )
@@ -110,7 +130,7 @@ def create_master_data(request, entity: str):
             brand = MedicineBrand.objects.get(brand_id=int(data["brand_id"]))
             med_type = MedicineType.objects.get(med_type_id=int(data["med_type_id"]))
             item = Medicine.objects.create(
-                medicine_name=str(data["medicine_name"]).strip(),
+                medicine_name=_required_text(data, "medicine_name"),
                 main_active_ingredient=(data.get("main_active_ingredient") or "").strip()
                 or None,
                 med_brand=brand,
@@ -120,13 +140,13 @@ def create_master_data(request, entity: str):
             result = {"medicine_id": item.medicine_id, "medicine_name": item.medicine_name}
         else:
             return fail("Unsupported master-data entity.", 404)
-        if not next((v for k, v in result.items() if k.endswith("name")), True):
-            return fail("Name cannot be empty.", 400)
         return ok(result, 201)
     except KeyError as exc:
         return fail(f"Missing required field: {exc.args[0]}", 400)
-    except (ValueError, IntegrityError) as exc:
-        return fail("Invalid or duplicate master-data record.", 409, details=str(exc))
+    except ValueError as exc:
+        return fail(str(exc), 400)
+    except IntegrityError:
+        return fail("Invalid or duplicate master-data record.", 409)
     except (MedicalFacilityType.DoesNotExist, TestCategory.DoesNotExist, MedicineBrand.DoesNotExist, MedicineType.DoesNotExist):
         return fail("Referenced master-data record was not found.", 404)
 
@@ -151,13 +171,11 @@ def set_active(request, entity: str, object_id: int):
         data = read_payload(request)
         if "is_active" not in data:
             return fail("is_active is required.", 400)
-        value = data["is_active"]
-        if isinstance(value, str):
-            value = value.lower() in {"1", "true", "yes", "on"}
+        value = _parse_bool(data["is_active"])
         model, pk_field = model_info
-        updated = model.objects.filter(**{pk_field: object_id}).update(is_active=bool(value))
+        updated = model.objects.filter(**{pk_field: object_id}).update(is_active=value)
         if not updated:
             return fail("Record not found.", 404)
-        return ok({"entity": entity, "id": object_id, "is_active": bool(value)})
+        return ok({"entity": entity, "id": object_id, "is_active": value})
     except ValueError as exc:
         return fail(str(exc), 400)

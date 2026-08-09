@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from django.contrib.auth.hashers import check_password
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
@@ -16,12 +18,27 @@ def _required(data, *fields):
         raise ValueError("Missing required fields: " + ", ".join(missing))
 
 
+def _optional_date(value, field_name: str):
+    if value in (None, ""):
+        return None
+    if isinstance(value, date) and not isinstance(value, datetime):
+        return value
+    try:
+        return date.fromisoformat(str(value))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{field_name} must use YYYY-MM-DD format.") from exc
+
+
 @csrf_exempt
 @require_POST
 def register_patient(request):
     try:
         data = read_payload(request)
         _required(data, "full_name", "email", "password")
+        if "date_of_birth" in data:
+            data["date_of_birth"] = _optional_date(data.get("date_of_birth"), "date_of_birth")
+            if data["date_of_birth"] and data["date_of_birth"] > date.today():
+                raise ValueError("date_of_birth cannot be in the future.")
         client, patient = AccountFactory.create_account("patient", **data)
         return ok(
             {"client": client_dict(client), "role": "patient", "p_id": patient.p_id},
@@ -75,6 +92,19 @@ def login(request):
     except Admin.DoesNotExist:
         try:
             doctor = Doctor.objects.get(user=client)
+            verification_status = (doctor.verification_status or "Pending").strip().title()
+            if verification_status != "Approved":
+                if verification_status == "Rejected":
+                    return fail(
+                        "Doctor registration was rejected by an administrator.",
+                        403,
+                        details={"verification_status": verification_status},
+                    )
+                return fail(
+                    "Doctor account is awaiting administrator approval.",
+                    403,
+                    details={"verification_status": verification_status},
+                )
             role, role_id = "doctor", doctor.d_id
         except Doctor.DoesNotExist:
             try:
@@ -135,7 +165,12 @@ def update_profile(request):
         request.client.save(update_fields=["full_name", "phone"])
 
         if request.role == "patient":
-            for field in ("date_of_birth", "blood_group", "address"):
+            if "date_of_birth" in data:
+                parsed_dob = _optional_date(data.get("date_of_birth"), "date_of_birth")
+                if parsed_dob and parsed_dob > date.today():
+                    raise ValueError("date_of_birth cannot be in the future.")
+                request.patient.date_of_birth = parsed_dob
+            for field in ("blood_group", "address"):
                 if field in data:
                     setattr(request.patient, field, data.get(field) or None)
             request.patient.save()
