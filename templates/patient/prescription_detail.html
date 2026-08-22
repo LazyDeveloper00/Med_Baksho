@@ -1,0 +1,92 @@
+{% extends "app_base.html" %}
+
+{% block title %}Prescription Detail | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Records</p>
+    <h1>Prescription Detail</h1>
+    <p><a href="/patient/prescriptions/">← Back to prescriptions</a></p>
+</div>
+
+<div class="card">
+    <h2>Basic Information</h2>
+    <div class="detail-list">
+        <div class="detail-item"><span>Date</span><strong>{{ prescription.prescription_date|date:"d M Y" }}</strong></div>
+        <div class="detail-item"><span>Disease</span><strong>{{ prescription.patient_disease.disease.disease_name }}</strong></div>
+        <div class="detail-item"><span>Doctor</span><strong>{{ prescription.doctor_name }}</strong></div>
+        <div class="detail-item"><span>Facility</span><strong>{% if prescription.facility %}{{ prescription.facility.facility_name }}{% else %}{{ prescription.custom_facility_name|default:"—" }}{% endif %}</strong></div>
+        <div class="detail-item"><span>Illness location</span><strong>{{ prescription.illness_location|default:"—" }}</strong></div>
+    </div>
+    {% if prescription.advice %}<p style="margin-top:1rem;"><strong>Advice:</strong> {{ prescription.advice }}</p>{% endif %}
+    {% if prescription.additional_notes %}<p><strong>Additional notes:</strong> {{ prescription.additional_notes }}</p>{% endif %}
+</div>
+
+<div class="card">
+    <h2>Medicines</h2>
+    {% if medicines %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Medicine</th><th>Brand</th><th>Dosage</th><th>Times/day</th>
+                    <th>Duration</th><th>Course</th><th>Effectiveness</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in medicines %}
+                <tr>
+                    <td>{{ m.medicine.medicine_name }}</td>
+                    <td>{{ m.medicine.med_brand.brand_name }}</td>
+                    <td>{{ m.dosage }}</td>
+                    <td>{{ m.times_per_day }}</td>
+                    <td>{{ m.duration_days }} days</td>
+                    <td>{% if m.course_completed %}Completed{% else %}Ongoing{% endif %}</td>
+                    <td>{{ m.effectiveness }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}<p class="muted">No medicines recorded.</p>{% endif %}
+</div>
+
+<div class="card">
+    <h2>Medical Tests</h2>
+    {% if tests %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr><th>Test</th><th>Status</th><th>Date</th><th>Center</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+                {% for t in tests %}
+                <tr>
+                    <td>{{ t.test.test_name }}{% if t.custom_test_name %} <span class="muted">({{ t.custom_test_name }})</span>{% endif %}</td>
+                    <td>{% include "includes/status_badge.html" with status=t.completion_status %}</td>
+                    <td>{{ t.test_date|date:"d M Y"|default:"—" }}</td>
+                    <td>{{ t.diagnostic_center_name|default:"—" }}</td>
+                    <td>{{ t.result_summary|default:"—" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}<p class="muted">No tests recorded.</p>{% endif %}
+</div>
+
+<div class="card">
+    <h2>Prescription Images</h2>
+    {% if images %}
+    <div class="grid grid-3">
+        {% for img in images %}
+        <a href="/media/{{ img.file_path }}" target="_blank" rel="noopener">
+            <img src="/media/{{ img.file_path }}" alt="Prescription image" style="width:100%;border-radius:10px;border:1px solid #dbe6f2;">
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}<p class="muted">No images uploaded.</p>{% endif %}
+</div>
+
+{% endblock %}

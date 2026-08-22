@@ -1,0 +1,205 @@
+/* =========================================================
+   DOCTOR PATIENTS
+   ========================================================= */
+
+.doctor-page {
+    min-height: 75vh;
+
+    padding: 70px 0 100px;
+
+    background: #f6fbf7;
+}
+
+.doctor-page-container {
+    width: min(1050px, calc(100% - 48px));
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.doctor-page-header {
+    margin-bottom: 35px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.doctor-page-header h1 {
+    margin-bottom: 10px;
+
+    color: #174c3b;
+
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+
+    line-height: 1.05;
+    letter-spacing: -1.7px;
+}
+
+.doctor-page-header p:last-child {
+    color: #718078;
+
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.doctor-secondary-button {
+    min-height: 44px;
+
+    padding: 0 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+    color: #52645d;
+
+    border: 1px solid #dce9e2;
+    border-radius: 9px;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.doctor-secondary-button:hover {
+    background: #f1f7f3;
+}
+
+
+/* =========================================================
+   PATIENT LIST
+   ========================================================= */
+
+.doctor-patients-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.doctor-patient-card {
+    padding: 20px;
+
+    display: grid;
+
+    grid-template-columns: 52px 1fr auto;
+
+    align-items: center;
+
+    gap: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.doctor-patient-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 28px rgba(23, 76, 59, 0.06);
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.doctor-patient-avatar {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e5f1e9;
+    color: #174c3b;
+
+    border-radius: 50%;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DETAILS
+   ========================================================= */
+
+.doctor-patient-details h2 {
+    margin-bottom: 5px;
+
+    color: #315a4a;
+
+    font-size: 0.95rem;
+}
+
+.doctor-patient-details p {
+    color: #929c97;
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   ARROW
+   ========================================================= */
+
+.doctor-patient-card-arrow {
+    color: #4d9274;
+
+    font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .doctor-page {
+        padding: 55px 0 75px;
+    }
+
+    .doctor-page-container {
+        width: calc(100% - 28px);
+    }
+
+    .doctor-page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .doctor-page-header .doctor-secondary-button {
+        width: 100%;
+    }
+
+    .doctor-patient-card {
+        grid-template-columns: 48px 1fr auto;
+
+        padding: 17px;
+    }
+
+}

@@ -1,0 +1,26 @@
+{% extends "app_base.html" %}
+
+{% block title %}Submit Medicine | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Records</p>
+    <h1>Submit a Medicine</h1>
+    <p>Propose a medicine that is not yet listed. An administrator will review it.</p>
+</div>
+
+<div class="card" style="max-width:620px;">
+    <form method="POST" action="/patient/medicine-submissions/add/">
+        {% csrf_token %}
+        {% include "includes/field.html" with field=form.proposed_medicine_name label="Proposed medicine name" required=True %}
+        {% include "includes/field.html" with field=form.med_brand_name label="Brand name" %}
+        {% include "includes/field.html" with field=form.proposed_active_ingredient label="Active ingredient" %}
+        <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Submit for Review</button>
+            <a href="/patient/medicine-submissions/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

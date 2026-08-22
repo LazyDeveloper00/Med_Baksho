@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Disease Details | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-diseases.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <div class="patient-page-header">
+
+            <div>
+                <p class="page-eyebrow">
+                    MEDICAL HISTORY
+                </p>
+
+                <h1>
+                    {{ disease.name }}
+                </h1>
+
+                <p>
+                    Details about this medical condition in your archive.
+                </p>
+            </div>
+
+            <a
+                href="/patient/diseases/"
+                class="patient-primary-button"
+            >
+                ← Back to Diseases
+            </a>
+
+        </div>
+
+
+        <div class="disease-detail-card">
+
+            <div class="disease-detail-icon">
+                +
+            </div>
+
+
+            <div class="disease-detail-content">
+
+                <div class="disease-detail-row">
+
+                    <span>
+                        Disease
+                    </span>
+
+                    <strong>
+                        {{ disease.name }}
+                    </strong>
+
+                </div>
+
+
+                {% if disease.description %}
+
+                <div class="disease-detail-row">
+
+                    <span>
+                        Description
+                    </span>
+
+                    <strong>
+                        {{ disease.description }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if disease.diagnosed_date %}
+
+                <div class="disease-detail-row">
+
+                    <span>
+                        Diagnosed Date
+                    </span>
+
+                    <strong>
+                        {{ disease.diagnosed_date|date:"d M Y" }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if disease.created_at %}
+
+                <div class="disease-detail-row">
+
+                    <span>
+                        Added
+                    </span>
+
+                    <strong>
+                        {{ disease.created_at|date:"d M Y" }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="disease-detail-actions">
+
+                <a
+                    href="/patient/diseases/{{ disease.id }}/edit/"
+                    class="patient-primary-button"
+                >
+                    Edit Disease
+                </a>
+
+                <form
+                    method="POST"
+                    action="/patient/diseases/{{ disease.id }}/delete/"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="disease-delete-button"
+                        onclick="return confirm('Are you sure you want to delete this disease?');"
+                    >
+                        Delete Disease
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

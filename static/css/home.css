@@ -1,0 +1,907 @@
+/* =========================================================
+   MEDIBAKSHO HOME PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+.home-section-container {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.home-hero {
+    min-height: 680px;
+
+    display: flex;
+    align-items: center;
+
+    background: #f6fbf7;
+
+    padding: 70px 0 90px;
+}
+
+.home-hero-container {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+
+    align-items: center;
+
+    gap: 70px;
+}
+
+
+/* Hero text */
+
+.home-hero-content {
+    max-width: 650px;
+}
+
+.home-eyebrow {
+    margin-bottom: 15px;
+
+    color: #3c8068;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 1.6px;
+}
+
+.home-hero h1 {
+    margin-bottom: 25px;
+
+    color: #174c3b;
+
+    font-size: clamp(3rem, 5.5vw, 5.2rem);
+    font-weight: 700;
+
+    line-height: 1.02;
+    letter-spacing: -3px;
+}
+
+.home-hero h1 span {
+    display: block;
+    color: #67a88b;
+}
+
+.home-hero-description {
+    max-width: 570px;
+
+    margin-bottom: 30px;
+
+    color: #65766e;
+
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+
+/* Hero buttons */
+
+.home-hero-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.home-primary-btn {
+    min-height: 52px;
+
+    padding: 0 24px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+
+    background: #174c3b;
+    color: #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.home-primary-btn:hover {
+    background: #10392c;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 12px 25px rgba(23, 76, 59, 0.16);
+}
+
+.home-primary-btn span {
+    font-size: 1.1rem;
+}
+
+.home-secondary-btn {
+    min-height: 52px;
+
+    padding: 0 24px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    color: #174c3b;
+
+    border: 1px solid #d6e5dd;
+    border-radius: 999px;
+
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.home-secondary-btn:hover {
+    background: #edf6f0;
+
+    border-color: #b9d3c5;
+
+    transform: translateY(-2px);
+}
+
+.home-login-text {
+    margin-top: 18px;
+
+    color: #7a8983;
+
+    font-size: 0.85rem;
+}
+
+.home-login-text a {
+    color: #174c3b;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   HERO MEDICAL CARD
+   ========================================================= */
+
+.home-hero-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.medical-card {
+    width: min(100%, 430px);
+
+    padding: 32px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 70px rgba(23, 76, 59, 0.10);
+
+    transform: rotate(2deg);
+
+    transition: transform 0.3s ease;
+}
+
+.medical-card:hover {
+    transform: rotate(0deg) translateY(-5px);
+}
+
+.medical-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.medical-card-label {
+    color: #7b8d85;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+.medical-card h3 {
+    margin-top: 7px;
+
+    margin-bottom: 0;
+
+    color: #174c3b;
+
+    font-size: 1.5rem;
+}
+
+.medical-card-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e4f1e9;
+    color: #174c3b;
+
+    border-radius: 15px;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.medical-card-line {
+    height: 1px;
+
+    margin: 25px 0;
+
+    background: #e4ebe7;
+}
+
+.medical-card-items {
+    display: flex;
+    flex-direction: column;
+
+    gap: 17px;
+}
+
+.medical-card-item {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.item-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #f0f7f2;
+    color: #3c8068;
+
+    border-radius: 12px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.medical-card-item strong {
+    display: block;
+
+    color: #264a3d;
+
+    font-size: 0.9rem;
+}
+
+.medical-card-item small {
+    color: #8a9892;
+
+    font-size: 0.75rem;
+}
+
+.medical-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 28px;
+    padding-top: 18px;
+
+    border-top: 1px solid #e4ebe7;
+
+    color: #8a9892;
+
+    font-size: 0.72rem;
+}
+
+.medical-card-footer span:last-child {
+    color: #58a17d;
+}
+
+
+/* =========================================================
+   INTRO SECTION
+   ========================================================= */
+
+.home-intro {
+    padding: 110px 0;
+
+    background: #ffffff;
+}
+
+.home-section-heading {
+    max-width: 650px;
+
+    margin-bottom: 45px;
+}
+
+.home-section-heading h2 {
+    margin-bottom: 18px;
+
+    color: #174c3b;
+
+    font-size: clamp(2rem, 4vw, 3.2rem);
+
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+}
+
+.home-section-heading > p:last-child {
+    max-width: 570px;
+
+    color: #718078;
+
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+
+/* Feature cards */
+
+.home-feature-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+}
+
+.home-feature-card {
+    min-height: 270px;
+
+    padding: 30px;
+
+    background: #f6fbf7;
+
+    border: 1px solid #e1ece5;
+    border-radius: 20px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.home-feature-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(23, 76, 59, 0.08);
+}
+
+.home-feature-number {
+    margin-bottom: 35px;
+
+    color: #68a58a;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.home-feature-card h3 {
+    margin-bottom: 12px;
+
+    color: #174c3b;
+
+    font-size: 1.2rem;
+}
+
+.home-feature-card p {
+    color: #718078;
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ROLES
+   ========================================================= */
+
+.home-roles {
+    padding: 110px 0;
+
+    background: #eef7f1;
+}
+
+.home-section-heading.centered {
+    max-width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+}
+
+.home-section-heading.centered > p:last-child {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-role-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+}
+
+.home-role-card {
+    padding: 32px;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    border: 1px solid #dce9e2;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.home-role-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 40px rgba(23, 76, 59, 0.09);
+}
+
+.home-role-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 25px;
+
+    background: #e3f1e8;
+    color: #174c3b;
+
+    border-radius: 15px;
+
+    font-weight: 700;
+}
+
+.home-role-card h3 {
+    margin-bottom: 12px;
+
+    color: #174c3b;
+
+    font-size: 1.3rem;
+}
+
+.home-role-card p {
+    min-height: 105px;
+
+    color: #718078;
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.home-role-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #174c3b;
+
+    font-size: 0.87rem;
+    font-weight: 700;
+}
+
+.home-role-link span {
+    font-size: 1rem;
+}
+
+.home-role-link:hover {
+    color: #3c8068;
+}
+
+
+/* =========================================================
+   DOCTOR SECTION
+   ========================================================= */
+
+.home-doctor-section {
+    padding: 100px 0;
+
+    background: #ffffff;
+}
+
+.home-doctor-card {
+    min-height: 350px;
+
+    padding: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 50px;
+
+    overflow: hidden;
+
+    background: #174c3b;
+
+    border-radius: 28px;
+
+    position: relative;
+}
+
+.home-doctor-content {
+    max-width: 620px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.home-doctor-content .home-eyebrow {
+    color: #a9d0ba;
+}
+
+.home-doctor-content h2 {
+    margin-bottom: 18px;
+
+    color: #ffffff;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.home-doctor-content p:not(.home-eyebrow) {
+    max-width: 520px;
+
+    margin-bottom: 28px;
+
+    color: #c9ddd2;
+
+    line-height: 1.7;
+}
+
+.home-doctor-content .home-primary-btn {
+    background: #ffffff;
+    color: #174c3b;
+}
+
+.home-doctor-content .home-primary-btn:hover {
+    background: #eef7f1;
+
+    color: #174c3b;
+}
+
+.home-doctor-symbol {
+    width: 210px;
+    height: 210px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.home-doctor-symbol span {
+    width: 110px;
+    height: 110px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    color: #174c3b;
+
+    border-radius: 50%;
+
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+.home-disclaimer-section {
+    padding: 0 0 100px;
+
+    background: #ffffff;
+}
+
+.home-disclaimer {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 18px;
+
+    padding: 25px 28px;
+
+    background: #fff9e9;
+
+    border: 1px solid #f0dfad;
+    border-radius: 16px;
+}
+
+.home-disclaimer-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #f4d77d;
+    color: #624d14;
+
+    border-radius: 50%;
+
+    font-weight: 700;
+}
+
+.home-disclaimer h3 {
+    margin-bottom: 5px;
+
+    color: #604a18;
+
+    font-size: 0.95rem;
+}
+
+.home-disclaimer p {
+    margin: 0;
+
+    color: #76622d;
+
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+.home-final-cta {
+    padding: 110px 0;
+
+    background: #f6fbf7;
+
+    text-align: center;
+}
+
+.home-final-content {
+    max-width: 700px;
+
+    margin: 0 auto;
+}
+
+.home-final-content h2 {
+    margin-bottom: 18px;
+
+    color: #174c3b;
+
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+}
+
+.home-final-content > p:not(.home-eyebrow) {
+    margin-bottom: 30px;
+
+    color: #718078;
+
+    font-size: 1rem;
+}
+
+.home-final-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.home-final-login {
+    color: #174c3b;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.home-final-login:hover {
+    color: #3c8068;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .home-hero-container {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+    }
+
+    .home-hero-content {
+        max-width: 720px;
+    }
+
+    .home-hero-visual {
+        justify-content: flex-start;
+    }
+
+    .medical-card {
+        transform: rotate(0);
+    }
+
+    .home-feature-grid,
+    .home-role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-feature-card {
+        min-height: auto;
+    }
+
+    .home-role-card p {
+        min-height: auto;
+    }
+
+    .home-doctor-card {
+        padding: 45px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .home-hero {
+        padding: 55px 0 70px;
+    }
+
+    .home-hero h1 {
+        font-size: clamp(2.7rem, 12vw, 4rem);
+
+        letter-spacing: -2px;
+    }
+
+    .home-intro,
+    .home-roles,
+    .home-doctor-section,
+    .home-final-cta {
+        padding: 75px 0;
+    }
+
+    .home-doctor-card {
+        padding: 35px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .home-doctor-symbol {
+        width: 140px;
+        height: 140px;
+    }
+
+    .home-doctor-symbol span {
+        width: 75px;
+        height: 75px;
+
+        font-size: 2rem;
+    }
+
+    .home-disclaimer-section {
+        padding-bottom: 75px;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .home-section-container,
+    .home-hero-container {
+        width: min(100% - 28px, 1200px);
+    }
+
+    .home-hero h1 {
+        font-size: 2.65rem;
+
+        letter-spacing: -1.5px;
+    }
+
+    .home-hero-description {
+        font-size: 0.95rem;
+    }
+
+    .home-hero-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .home-primary-btn,
+    .home-secondary-btn {
+        width: 100%;
+    }
+
+    .medical-card {
+        padding: 24px;
+
+        border-radius: 20px;
+    }
+
+    .home-section-heading h2 {
+        font-size: 2.15rem;
+    }
+
+    .home-doctor-card {
+        padding: 28px;
+
+        border-radius: 20px;
+    }
+
+    .home-disclaimer {
+        padding: 20px;
+    }
+
+    .home-final-actions {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,49 @@
+{% extends "app_base.html" %}
+
+{% block title %}Doctor Approvals | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Administrator</p>
+    <h1>Doctor Approvals</h1>
+    <p>Review and decide on pending doctor registrations.</p>
+</div>
+
+{% if doctors %}
+    {% for d in doctors %}
+    <div class="card">
+        <div class="card-header">
+            <h2>Dr. {{ d.user.full_name }}</h2>
+            {% include "includes/status_badge.html" with status="Pending" %}
+        </div>
+        <div class="detail-list" style="margin-bottom:1rem;">
+            <div class="detail-item"><span>Email</span><strong>{{ d.user.email }}</strong></div>
+            <div class="detail-item"><span>Phone</span><strong>{{ d.user.phone|default:"—" }}</strong></div>
+            <div class="detail-item"><span>Licence</span><strong>{{ d.licence_number }}</strong></div>
+            <div class="detail-item"><span>Degree</span><strong>{{ d.degree|default:"—" }}</strong></div>
+            <div class="detail-item"><span>Expertise</span><strong>{{ d.field_of_expertise|default:"—" }}</strong></div>
+            <div class="detail-item"><span>Workplace</span><strong>{{ d.workplace|default:"—" }}</strong></div>
+        </div>
+
+        <form method="POST" action="/admin-panel/doctors/pending/">
+            {% csrf_token %}
+            <input type="hidden" name="doctor_id" value="{{ d.d_id }}">
+            <div class="form-group">
+                <label for="comments-{{ d.d_id }}">Comments (recommended for rejection)</label>
+                <input type="text" id="comments-{{ d.d_id }}" name="comments">
+            </div>
+            <div class="btn-row">
+                <button type="submit" name="decision" value="approve" class="btn btn-success">Approve</button>
+                <button type="submit" name="decision" value="reject" class="btn btn-danger">Reject</button>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="card">
+    {% include "includes/empty_state.html" with title="No pending doctors" message="All doctor registrations have been reviewed." %}
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,164 @@
+/* =========================================================
+   PATIENT AI ASSISTANT
+   ========================================================= */
+
+.patient-ai-section {
+    width: 100%;
+
+    margin-top: 45px;
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px rgba(23, 76, 59, 0.04);
+}
+
+.patient-ai-header {
+    margin-bottom: 20px;
+}
+
+.patient-ai-header h2 {
+    margin-bottom: 7px;
+
+    color: #315a4a;
+
+    font-size: 1.25rem;
+}
+
+.patient-ai-header p:last-child {
+    color: #89958f;
+
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   AI FORM
+   ========================================================= */
+
+.patient-ai-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.patient-ai-form textarea {
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 14px 16px;
+
+    resize: vertical;
+
+    background: #f9fcfa;
+
+    border: 1px solid #d5e2db;
+    border-radius: 10px;
+
+    color: #30483e;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.patient-ai-form textarea::placeholder {
+    color: #a0aaa5;
+}
+
+.patient-ai-form textarea:focus {
+    border-color: #4d9274;
+
+    box-shadow:
+        0 0 0 3px rgba(77, 146, 116, 0.1);
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.patient-ai-form button {
+    align-self: flex-end;
+
+    min-height: 42px;
+
+    padding: 0 20px;
+
+    background: #315a4a;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: opacity 0.2s ease;
+}
+
+.patient-ai-form button:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   AI RESPONSE
+   ========================================================= */
+
+.patient-ai-response {
+    margin-top: 20px;
+    padding: 18px;
+
+    background: #f7fbf8;
+
+    border-radius: 11px;
+
+    color: #315a4a;
+
+    font-size: 0.8rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   COMPACT VERSION
+   ========================================================= */
+
+.patient-ai-compact {
+    margin-top: 35px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .patient-ai-section {
+        padding: 21px;
+
+        margin-top: 30px;
+    }
+
+    .patient-ai-form button {
+        width: 100%;
+    }
+
+}

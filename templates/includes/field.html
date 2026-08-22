@@ -1,0 +1,16 @@
+{% comment %}
+Render one Django form field with a label, required marker and inline errors.
+Usage: {% include "includes/field.html" with field=form.email label="Email" required=True hint="..." %}
+{% endcomment %}
+<div class="form-group">
+    <label for="{{ field.id_for_label }}">
+        {{ label }}{% if required %} <span class="required-star">*</span>{% endif %}
+    </label>
+    {{ field }}
+    {% if hint %}<p class="form-hint">{{ hint }}</p>{% endif %}
+    {% if field.errors %}
+        <div class="field-error-list">
+            {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
+        </div>
+    {% endif %}
+</div>

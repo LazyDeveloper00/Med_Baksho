@@ -54,7 +54,7 @@ class AdminAccountCreator(AccountCreator):
 
 
 class AccountFactory:
-    """Branch-free factory: role names resolve through a creator registry."""
+    """Branch-free factory: role names resolve directly through a creator registry."""
 
     _creators: ClassVar[dict[str, type[AccountCreator]]] = {
         "patient": PatientAccountCreator,
@@ -64,9 +64,5 @@ class AccountFactory:
 
     @classmethod
     def create_account(cls, role: str, *, password: str, **data: Any):
-        normalized_role = role.strip().lower()
-        try:
-            creator_class = cls._creators[normalized_role]
-        except KeyError as exc:
-            raise ValueError("Role must be patient, doctor, or admin.") from exc
+        creator_class = cls._creators[role.strip().lower()]
         return creator_class().create(password=password, **data)

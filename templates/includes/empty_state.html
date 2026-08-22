@@ -1,0 +1,24 @@
+<div class="empty-state">
+
+    <div class="empty-state-icon">
+        +
+    </div>
+
+    <h3>
+        {{ title|default:"Nothing here yet" }}
+    </h3>
+
+    <p>
+        {{ message|default:"There is no information to display right now." }}
+    </p>
+
+    {% if action_url and action_text %}
+        <a
+            href="{{ action_url }}"
+            class="btn btn-primary"
+        >
+            {{ action_text }}
+        </a>
+    {% endif %}
+
+</div>

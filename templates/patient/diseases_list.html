@@ -1,0 +1,49 @@
+{% extends "app_base.html" %}
+
+{% block title %}My Diseases | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Medical History</p>
+    <h1>My Disease Records</h1>
+    <p>Diseases you have added to your medical archive.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Disease Records</h2>
+        <a href="/patient/diseases/add/" class="btn btn-primary btn-sm">Add Disease</a>
+    </div>
+
+    {% if diseases %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Disease</th>
+                    <th>Custom Name</th>
+                    <th>Diagnosed</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in diseases %}
+                <tr>
+                    <td>{{ d.disease.disease_name }}</td>
+                    <td>{{ d.custom_disease_name|default:"—" }}</td>
+                    <td>{{ d.diagnosed_date|date:"d M Y"|default:"—" }}</td>
+                    <td>{% include "includes/status_badge.html" with status=d.current_status %}</td>
+                    <td>{{ d.notes|default:"—" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        {% include "includes/empty_state.html" with title="No disease records yet" message="Add your first disease to start building your medical history." action_url="/patient/diseases/add/" action_text="Add Disease" %}
+    {% endif %}
+</div>
+
+{% endblock %}

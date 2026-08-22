@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Patient Details | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/doctor-patient-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="doctor-page">
+
+    <div class="doctor-page-container">
+
+        <!-- HEADER -->
+
+        <div class="doctor-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    PATIENT PROFILE
+                </p>
+
+                <h1>
+                    Patient Details
+                </h1>
+
+                <p>
+                    View the patient's available medical information.
+                </p>
+
+            </div>
+
+            <a
+                href="/doctor/patients/"
+                class="doctor-secondary-button"
+            >
+                ← Back to Patients
+            </a>
+
+        </div>
+
+
+        <!-- PATIENT PROFILE -->
+
+        <section class="doctor-patient-profile-card">
+
+            <div class="doctor-patient-profile-header">
+
+                <div class="doctor-patient-large-avatar">
+
+                    {{ patient.user.first_name|first|default:patient.user.username|first|upper }}
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        {{ patient.user.get_full_name|default:patient.user.username }}
+                    </h2>
+
+                    <p>
+                        Patient
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="doctor-patient-information">
+
+                <div>
+
+                    <span>
+                        Username
+                    </span>
+
+                    <strong>
+                        {{ patient.user.username }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong>
+                        {{ patient.user.email|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DISEASES -->
+
+        <section class="doctor-detail-section">
+
+            <div class="doctor-section-heading">
+
+                <p class="section-label">
+                    MEDICAL HISTORY
+                </p>
+
+                <h2>
+                    Diseases
+                </h2>
+
+            </div>
+
+
+            {% if diseases %}
+
+                <div class="doctor-detail-list">
+
+                    {% for disease in diseases %}
+
+                        <div class="doctor-detail-item">
+
+                            <div>
+
+                                <strong>
+                                    {% if disease.disease %}
+                                        {{ disease.disease.disease_name }}
+                                    {% else %}
+                                        {{ disease.custom_disease_name|default:"Disease" }}
+                                    {% endif %}
+                                </strong>
+
+                                {% if disease.diagnosed_date %}
+
+                                    <span>
+                                        Diagnosed:
+                                        {{ disease.diagnosed_date|date:"d M Y" }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="doctor-empty-card">
+                    No disease records available.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- PRESCRIPTIONS -->
+
+        <section class="doctor-detail-section">
+
+            <div class="doctor-section-heading">
+
+                <p class="section-label">
+                    MEDICATION
+                </p>
+
+                <h2>
+                    Prescriptions
+                </h2>
+
+            </div>
+
+
+            {% if prescriptions %}
+
+                <div class="doctor-detail-list">
+
+                    {% for prescription in prescriptions %}
+
+                        <div class="doctor-detail-item">
+
+                            <div>
+
+                                <strong>
+                                    Prescription
+                                </strong>
+
+                                {% if prescription.prescription_date %}
+
+                                    <span>
+                                        {{ prescription.prescription_date|date:"d M Y" }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="doctor-empty-card">
+                    No prescription records available.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- MEDICAL RECORDS -->
+
+        <section class="doctor-detail-section">
+
+            <div class="doctor-section-heading">
+
+                <p class="section-label">
+                    MEDICAL ARCHIVE
+                </p>
+
+                <h2>
+                    Medical Records
+                </h2>
+
+            </div>
+
+
+            {% if records %}
+
+                <div class="doctor-detail-list">
+
+                    {% for record in records %}
+
+                        <div class="doctor-detail-item">
+
+                            <div>
+
+                                <strong>
+                                    {{ record.title|default:"Medical Record" }}
+                                </strong>
+
+                                <span>
+
+                                    {% if record.record_date %}
+                                        {{ record.record_date|date:"d M Y" }}
+                                    {% else %}
+                                        Date not provided
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="doctor-empty-card">
+                    No medical records available.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</section>
+
+{% endblock %}

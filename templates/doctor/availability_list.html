@@ -1,0 +1,49 @@
+{% extends "app_base.html" %}
+
+{% block title %}My Availability | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Doctor</p>
+    <h1>My Availability</h1>
+    <p>All your availability slots, including past and inactive ones.</p>
+</div>
+
+{% if not is_approved %}
+<div class="notice" style="margin-bottom:1.25rem;">
+    Availability management is available after administrator approval.
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-header">
+        <h2>Availability Slots</h2>
+        {% if is_approved %}<a href="/doctor/availability/add/" class="btn btn-primary btn-sm">Add Slot</a>{% endif %}
+    </div>
+
+    {% if slots %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr><th>Date</th><th>Time</th><th>Fee</th><th>Status</th>{% if is_approved %}<th></th>{% endif %}</tr>
+            </thead>
+            <tbody>
+                {% for slot in slots %}
+                <tr>
+                    <td>{{ slot.available_date|date:"d M Y" }}</td>
+                    <td>{{ slot.start_time|time:"H:i" }} – {{ slot.end_time|time:"H:i" }}</td>
+                    <td>৳{{ slot.visiting_fee }}</td>
+                    <td>{% if slot.is_active %}{% include "includes/status_badge.html" with status="Active" %}{% else %}{% include "includes/status_badge.html" with status="Inactive" %}{% endif %}</td>
+                    {% if is_approved %}<td><a href="/doctor/availability/{{ slot.availability_id }}/edit/">Edit</a></td>{% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        {% include "includes/empty_state.html" with title="No availability yet" message="You have not added any availability slots." %}
+    {% endif %}
+</div>
+
+{% endblock %}

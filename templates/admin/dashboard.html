@@ -1,0 +1,82 @@
+{% extends "app_base.html" %}
+
+{% block title %}Admin Dashboard | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Administrator</p>
+    <h1>Administrator Dashboard</h1>
+    <p>System overview and pending work.</p>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:1.5rem;">
+    <div class="stat-card"><div class="stat-value">{{ counts.users }}</div><div class="stat-label">Total Users</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.patients }}</div><div class="stat-label">Patients</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.doctors }}</div><div class="stat-label">Doctors</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.pending_doctors }}</div><div class="stat-label">Pending Doctors</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.pending_medicines }}</div><div class="stat-label">Pending Medicines</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.active_medicines }}</div><div class="stat-label">Active Medicines</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.diseases }}</div><div class="stat-label">Diseases</div></div>
+    <div class="stat-card"><div class="stat-value">{{ counts.tests }}</div><div class="stat-label">Medical Tests</div></div>
+</div>
+
+<div class="card">
+    <h2>Quick Links</h2>
+    <div class="quick-actions">
+        <a href="/admin-panel/users/">Users</a>
+        <a href="/admin-panel/doctors/pending/">Doctor Approvals</a>
+        <a href="/admin-panel/medicines/pending/">Medicine Approvals</a>
+        <a href="/admin-panel/master-data/">Master Data</a>
+        <a href="/admin-panel/activity/">Activity Logs</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Latest Pending Doctors</h2>
+        <a href="/admin-panel/doctors/pending/">View all →</a>
+    </div>
+    {% if pending_doctors %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Licence</th><th>Expertise</th></tr></thead>
+            <tbody>
+                {% for d in pending_doctors %}
+                <tr>
+                    <td>Dr. {{ d.user.full_name }}</td>
+                    <td>{{ d.user.email }}</td>
+                    <td>{{ d.licence_number }}</td>
+                    <td>{{ d.field_of_expertise|default:"—" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}<p class="muted mb-0">No pending doctors.</p>{% endif %}
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Latest Pending Medicines</h2>
+        <a href="/admin-panel/medicines/pending/">View all →</a>
+    </div>
+    {% if pending_medicines %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead><tr><th>Medicine</th><th>Patient</th><th>Submitted</th></tr></thead>
+            <tbody>
+                {% for s in pending_medicines %}
+                <tr>
+                    <td>{{ s.proposed_medicine_name }}</td>
+                    <td>{{ s.patient.user.full_name }}</td>
+                    <td>{{ s.submitted_at|date:"d M Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}<p class="muted mb-0">No pending medicine submissions.</p>{% endif %}
+</div>
+
+{% endblock %}

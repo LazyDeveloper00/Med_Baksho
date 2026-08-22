@@ -1,0 +1,53 @@
+{% extends "app_base.html" %}
+
+{% block title %}Users | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Administrator</p>
+    <h1>User Management</h1>
+    <p>Suspend or reactivate user accounts.</p>
+</div>
+
+<div class="card">
+    <h2>All Users</h2>
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr><th>ID</th><th>Full name</th><th>Email</th><th>Phone</th><th>Role</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.client.user_id }}</td>
+                    <td>{{ row.client.full_name }}</td>
+                    <td>{{ row.client.email }}</td>
+                    <td>{{ row.client.phone|default:"—" }}</td>
+                    <td>{{ row.role }}</td>
+                    <td>{% include "includes/status_badge.html" with status=row.client.account_status %}</td>
+                    <td>
+                        {% if row.is_self %}
+                            <span class="muted">Current admin</span>
+                        {% else %}
+                        <form method="POST" action="/admin-panel/users/" class="inline-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ row.client.user_id }}">
+                            {% if row.client.account_status|lower == "active" %}
+                                <input type="hidden" name="account_status" value="Suspended">
+                                <button type="submit" class="btn btn-danger btn-sm">Suspend</button>
+                            {% else %}
+                                <input type="hidden" name="account_status" value="Active">
+                                <button type="submit" class="btn btn-success btn-sm">Reactivate</button>
+                            {% endif %}
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Add Medical Record | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-records.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <!-- HEADER -->
+
+        <div class="patient-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    MEDICAL ARCHIVE
+                </p>
+
+                <h1>
+                    Add Medical Record
+                </h1>
+
+                <p>
+                    Add a medical document or record
+                    to your personal archive.
+                </p>
+
+            </div>
+
+            <a
+                href="/patient/records/"
+                class="patient-primary-button"
+            >
+                ← Back to Records
+            </a>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="record-form-card">
+
+            {% include "includes/form_errors.html" %}
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="record-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- ================================
+                     BASIC INFORMATION
+                     ================================ -->
+
+                <div class="record-form-section">
+
+                    <div class="record-form-heading">
+
+                        <p class="section-label">
+                            RECORD INFORMATION
+                        </p>
+
+                        <h2>
+                            Basic Information
+                        </h2>
+
+                    </div>
+
+
+                    <div class="record-form-grid">
+
+
+                        <!-- Title -->
+
+                        <div class="record-form-group">
+
+                            <label for="title">
+                                Record Title
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value="{{ request.POST.title|default:'' }}"
+                                placeholder="e.g. Blood Test Report"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Record Type -->
+
+                        <div class="record-form-group">
+
+                            <label for="record_type">
+                                Record Type
+                            </label>
+
+                            <select
+                                id="record_type"
+                                name="record_type"
+                            >
+
+                                <option value="">
+                                    Select record type
+                                </option>
+
+                                <option value="lab_report">
+                                    Lab Report
+                                </option>
+
+                                <option value="imaging">
+                                    Imaging Report
+                                </option>
+
+                                <option value="hospital">
+                                    Hospital Record
+                                </option>
+
+                                <option value="doctor_note">
+                                    Doctor Note
+                                </option>
+
+                                <option value="other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Record Date -->
+
+                        <div class="record-form-group">
+
+                            <label for="record_date">
+                                Record Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="record_date"
+                                name="record_date"
+                                value="{{ request.POST.record_date|default:'' }}"
+                            >
+
+                        </div>
+
+
+                        <!-- Doctor -->
+
+                        <div class="record-form-group">
+
+                            <label for="doctor_name">
+                                Doctor Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="doctor_name"
+                                name="doctor_name"
+                                value="{{ request.POST.doctor_name|default:'' }}"
+                                placeholder="Enter doctor's name"
+                            >
+
+                        </div>
+
+
+                        <!-- Facility -->
+
+                        <div class="record-form-group">
+
+                            <label for="facility_name">
+                                Facility
+                            </label>
+
+                            <input
+                                type="text"
+                                id="facility_name"
+                                name="facility_name"
+                                value="{{ request.POST.facility_name|default:'' }}"
+                                placeholder="Hospital, clinic, laboratory..."
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     DESCRIPTION
+                     ================================ -->
+
+                <div class="record-form-section">
+
+                    <div class="record-form-heading">
+
+                        <p class="section-label">
+                            DETAILS
+                        </p>
+
+                        <h2>
+                            Record Details
+                        </h2>
+
+                    </div>
+
+
+                    <div class="record-form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="7"
+                            placeholder="Add relevant information about this medical record..."
+                        >{{ request.POST.description|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     NOTES
+                     ================================ -->
+
+                <div class="record-form-section">
+
+                    <div class="record-form-heading">
+
+                        <p class="section-label">
+                            NOTES
+                        </p>
+
+                        <h2>
+                            Additional Notes
+                        </h2>
+
+                    </div>
+
+
+                    <div class="record-form-group">
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            rows="6"
+                            placeholder="Add anything else you want to remember..."
+                        >{{ request.POST.notes|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     FILE
+                     ================================ -->
+
+                <div class="record-form-section">
+
+                    <div class="record-form-heading">
+
+                        <p class="section-label">
+                            DOCUMENT
+                        </p>
+
+                        <h2>
+                            Upload Medical Record
+                        </h2>
+
+                    </div>
+
+
+                    <div class="record-upload">
+
+                        <label for="record_file">
+                            Select File
+                        </label>
+
+                        <input
+                            type="file"
+                            id="record_file"
+                            name="record_file"
+                            accept=".pdf,image/png,image/jpeg,image/webp"
+                        >
+
+                        <p>
+                            Upload the medical document or report
+                            associated with this record.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="record-form-actions">
+
+                    <a
+                        href="/patient/records/"
+                        class="record-cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="patient-primary-button"
+                    >
+                        Save Record
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

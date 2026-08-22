@@ -1,0 +1,62 @@
+{% extends "app_base.html" %}
+
+{% block title %}My Profile | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Account</p>
+    <h1>My Profile</h1>
+    <p>View and update your account information.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Account Information</h2>
+        {% include "includes/status_badge.html" with status=client.account_status %}
+    </div>
+    <div class="detail-list">
+        <div class="detail-item"><span>Full name</span><strong>{{ client.full_name }}</strong></div>
+        <div class="detail-item"><span>Email</span><strong>{{ client.email }}</strong></div>
+        <div class="detail-item"><span>Role</span><strong>{{ role_display }}</strong></div>
+        <div class="detail-item"><span>Phone</span><strong>{{ client.phone|default:"Not provided" }}</strong></div>
+
+        {% if role == "patient" %}
+        <div class="detail-item"><span>Date of birth</span><strong>{{ patient.date_of_birth|date:"d M Y"|default:"Not provided" }}</strong></div>
+        <div class="detail-item"><span>Blood group</span><strong>{{ patient.blood_group|default:"Not provided" }}</strong></div>
+        <div class="detail-item"><span>Address</span><strong>{{ patient.address|default:"Not provided" }}</strong></div>
+        {% elif role == "doctor" %}
+        <div class="detail-item"><span>Licence number</span><strong>{{ doctor.licence_number }}</strong></div>
+        <div class="detail-item"><span>Verification</span><strong>{{ doctor.verification_status }}</strong></div>
+        <div class="detail-item"><span>Degree</span><strong>{{ doctor.degree|default:"Not provided" }}</strong></div>
+        <div class="detail-item"><span>Expertise</span><strong>{{ doctor.field_of_expertise|default:"Not provided" }}</strong></div>
+        <div class="detail-item"><span>Workplace</span><strong>{{ doctor.workplace|default:"Not provided" }}</strong></div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card" style="max-width:680px;">
+    <h2>Update Profile</h2>
+    <form method="POST" action="/profile/">
+        {% csrf_token %}
+        {% include "includes/field.html" with field=form.full_name label="Full name" required=True %}
+        {% include "includes/field.html" with field=form.phone label="Phone" %}
+
+        {% if role == "patient" %}
+            {% include "includes/field.html" with field=form.date_of_birth label="Date of birth" %}
+            {% include "includes/field.html" with field=form.blood_group label="Blood group" %}
+            {% include "includes/field.html" with field=form.address label="Address" %}
+        {% elif role == "doctor" %}
+            {% include "includes/field.html" with field=form.degree label="Degree" %}
+            {% include "includes/field.html" with field=form.field_of_expertise label="Field of expertise" %}
+            {% include "includes/field.html" with field=form.workplace label="Workplace" %}
+        {% endif %}
+
+        <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="/logout/" class="btn btn-danger">Logout</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
