@@ -36,9 +36,15 @@
 
 `ChatbotProxy` stands between a patient and `ChatbotService`. It blocks inactive accounts, non-patient users, empty/oversized questions, and excessive repeated requests before any external AI request is made.
 
+## 7. Singleton Pattern
+
+**File:** `core/accounts/factories.py`
+
+The Singleton pattern ensures the creation of only one instance of AccountCreator inside factories.py.
+
+
 ## Why the other taught patterns were not selected
 
-- Singleton was avoided because Django already manages database connections and application configuration; forcing another global singleton would add little value.
 - Decorator is already heavily used by Django, but the project requirement is clearer when the six custom patterns are visible as project classes.
 - Adapter would overlap with the Strategy implementation for AI providers.
 - Iterator would be artificial because Django QuerySets already provide iteration over records.
