@@ -8,12 +8,12 @@ from core.models import Admin, Client, Doctor, Patient
 
 
 class AccountRole(ABC):
-    """Abstract Product interface matching Step 1 of the Factory pattern."""
+ 
     pass
 
 
 class AccountCreator(ABC):
-    """Creator base class used by the Factory Method implementation."""
+  
 
     @transaction.atomic
     def create(self, *, password: str, **data: Any):
@@ -59,7 +59,7 @@ class AdminAccountCreator(AccountCreator):
 
 
 class AccountFactory:
-    """Singleton factory supporting direct class invocation and static instance getters."""
+      
 
     _instance: ClassVar[Optional["AccountFactory"]] = None
     _creators: ClassVar[dict[str, type[AccountCreator]]] = {
@@ -75,12 +75,12 @@ class AccountFactory:
 
     @classmethod
     def get_instance(cls) -> "AccountFactory":
-        """Matches Logger::getLogger() access pattern."""
+        
         return cls()
 
     @classmethod
     def create_account(cls, role: str, *, password: str, **data: Any):
-        """Class method wrapper resolving the Singleton instance automatically."""
+
         instance = cls.get_instance()
         creator_class = instance._creators[role.strip().lower()]
         return creator_class().create(password=password, **data)
