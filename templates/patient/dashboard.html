@@ -1,0 +1,112 @@
+{% extends "app_base.html" %}
+
+{% block title %}Patient Dashboard | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Patient</p>
+    <h1>Welcome, {{ nav.full_name }}</h1>
+    <p>Your medical archive at a glance.</p>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:1.5rem;">
+    <div class="stat-card">
+        <div class="stat-value">{{ counts.diseases }}</div>
+        <div class="stat-label">Disease Records</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ counts.prescriptions }}</div>
+        <div class="stat-label">Prescriptions</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ counts.pending_submissions }}</div>
+        <div class="stat-label">Pending Medicines</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ counts.notifications }}</div>
+        <div class="stat-label">Notifications</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Quick Actions</h2>
+    <div class="quick-actions">
+        <a href="/patient/diseases/add/">Add Disease</a>
+        <a href="/patient/prescriptions/add/">Add Prescription</a>
+        <a href="/patient/search/">Search Records</a>
+        <a href="/patient/medicine-submissions/add/">Submit Medicine</a>
+        <a href="/patient/chatbot/">Ask Record Assistant</a>
+        <a href="/doctors/availability/">View Doctors</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Recent Prescriptions</h2>
+        <a href="/patient/prescriptions/">View all →</a>
+    </div>
+
+    {% if recent_prescriptions %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Disease</th>
+                    <th>Doctor</th>
+                    <th>Facility</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in recent_prescriptions %}
+                <tr>
+                    <td>{{ p.prescription_date|date:"d M Y" }}</td>
+                    <td>{{ p.patient_disease.disease.disease_name }}</td>
+                    <td>{{ p.doctor_name }}</td>
+                    <td>{% if p.facility %}{{ p.facility.facility_name }}{% else %}{{ p.custom_facility_name|default:"—" }}{% endif %}</td>
+                    <td><a href="/patient/prescriptions/{{ p.prescription_id }}/">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        {% include "includes/empty_state.html" with title="No prescriptions yet" message="Your recent prescriptions will appear here once you add them." action_url="/patient/prescriptions/add/" action_text="Add Prescription" %}
+    {% endif %}
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Recent Diseases</h2>
+        <a href="/patient/diseases/">View all →</a>
+    </div>
+
+    {% if recent_diseases %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Disease</th>
+                    <th>Status</th>
+                    <th>Diagnosed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in recent_diseases %}
+                <tr>
+                    <td>{{ d.disease.disease_name }}{% if d.custom_disease_name %} <span class="muted">({{ d.custom_disease_name }})</span>{% endif %}</td>
+                    <td>{% include "includes/status_badge.html" with status=d.current_status %}</td>
+                    <td>{{ d.diagnosed_date|date:"d M Y"|default:"—" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        {% include "includes/empty_state.html" with title="No diseases recorded" message="You have not added any diseases to your medical history yet." action_url="/patient/diseases/add/" action_text="Add Disease" %}
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,453 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Edit Prescription | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-prescriptions.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <!-- HEADER -->
+
+        <div class="patient-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    MEDICAL RECORD
+                </p>
+
+                <h1>
+                    Edit Prescription
+                </h1>
+
+                <p>
+                    Update the information saved for this prescription.
+                </p>
+
+            </div>
+
+            <a
+                href="/patient/prescriptions/{{ prescription.prescription_id }}/"
+                class="patient-primary-button"
+            >
+                ← Back to Prescription
+            </a>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="prescription-form-card">
+
+            {% include "includes/form_errors.html" %}
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="prescription-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- ================================
+                     BASIC INFORMATION
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            BASIC INFORMATION
+                        </p>
+
+                        <h2>
+                            Prescription Information
+                        </h2>
+
+                    </div>
+
+
+                    <div class="prescription-form-grid">
+
+                        <!-- Date -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="prescription_date">
+                                Prescription Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="prescription_date"
+                                name="prescription_date"
+                                value="{{ prescription.prescription_date|date:'Y-m-d' }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Doctor -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="doctor_name">
+                                Doctor Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="doctor_name"
+                                name="doctor_name"
+                                value="{{ prescription.doctor_name|default:'' }}"
+                                placeholder="Enter doctor's name"
+                            >
+
+                        </div>
+
+
+                        <!-- Disease -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="patient_disease_id">
+                                Disease
+                            </label>
+
+                            <select
+                                id="patient_disease_id"
+                                name="patient_disease_id"
+                            >
+
+                                <option value="">
+                                    Select disease
+                                </option>
+
+                                {% for disease in patient_diseases %}
+
+                                    <option
+                                        value="{{ disease.patient_disease_id }}"
+                                        {% if prescription.patient_disease.patient_disease_id == disease.patient_disease_id %}
+                                            selected
+                                        {% endif %}
+                                    >
+
+                                        {% if disease.disease %}
+                                            {{ disease.disease.disease_name }}
+                                        {% else %}
+                                            {{ disease.custom_disease_name }}
+                                        {% endif %}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Facility -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="facility_id">
+                                Facility
+                            </label>
+
+                            <select
+                                id="facility_id"
+                                name="facility_id"
+                            >
+
+                                <option value="">
+                                    Select facility
+                                </option>
+
+                                {% for facility in facilities %}
+
+                                    <option
+                                        value="{{ facility.facility_id }}"
+                                        {% if prescription.facility.facility_id == facility.facility_id %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ facility.facility_name }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Custom Facility -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="custom_facility_name">
+                                Other Facility
+                            </label>
+
+                            <input
+                                type="text"
+                                id="custom_facility_name"
+                                name="custom_facility_name"
+                                value="{{ prescription.custom_facility_name|default:'' }}"
+                                placeholder="If the facility is not listed"
+                            >
+
+                        </div>
+
+
+                        <!-- Illness Location -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="illness_location">
+                                Illness Location
+                            </label>
+
+                            <input
+                                type="text"
+                                id="illness_location"
+                                name="illness_location"
+                                value="{{ prescription.illness_location|default:'' }}"
+                                placeholder="e.g. Head, chest, stomach"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     MEDICINES
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            MEDICATION
+                        </p>
+
+                        <h2>
+                            Medicines
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="medicines">
+                            Medicine Details
+                        </label>
+
+                        <textarea
+                            id="medicines"
+                            name="medicines"
+                            rows="6"
+                            placeholder="Enter medicine names, dosage, frequency, duration, etc."
+                        >{{ prescription.medicines|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     TESTS
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            MEDICAL TESTS
+                        </p>
+
+                        <h2>
+                            Tests
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="tests">
+                            Test Information
+                        </label>
+
+                        <textarea
+                            id="tests"
+                            name="tests"
+                            rows="5"
+                            placeholder="Enter recommended or completed tests..."
+                        >{{ prescription.tests|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     ADVICE
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            DOCTOR'S ADVICE
+                        </p>
+
+                        <h2>
+                            Advice
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="advice">
+                            Doctor's Advice
+                        </label>
+
+                        <textarea
+                            id="advice"
+                            name="advice"
+                            rows="5"
+                            placeholder="Enter the doctor's instructions or advice..."
+                        >{{ prescription.advice|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     NOTES
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            NOTES
+                        </p>
+
+                        <h2>
+                            Additional Notes
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="additional_notes">
+                            Additional Notes
+                        </label>
+
+                        <textarea
+                            id="additional_notes"
+                            name="additional_notes"
+                            rows="5"
+                            placeholder="Add anything else you want to remember..."
+                        >{{ prescription.additional_notes|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     NEW IMAGE
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            DOCUMENT
+                        </p>
+
+                        <h2>
+                            Replace Prescription Image
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-upload">
+
+                        <label for="prescription_image">
+                            Upload a new image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="prescription_image"
+                            name="prescription_image"
+                            accept="image/png,image/jpeg,image/webp"
+                        >
+
+                        <p>
+                            Leave this empty if you do not want to
+                            upload another image.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="prescription-form-actions">
+
+                    <a
+                        href="/patient/prescriptions/{{ prescription.prescription_id }}/"
+                        class="prescription-cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="patient-primary-button"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    My Patients | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/doctor-patients.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="doctor-page">
+
+    <div class="doctor-page-container">
+
+        <!-- HEADER -->
+
+        <div class="doctor-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    DOCTOR PORTAL
+                </p>
+
+                <h1>
+                    My Patients
+                </h1>
+
+                <p>
+                    View patients associated with your doctor account.
+                </p>
+
+            </div>
+
+            <a
+                href="/doctor/"
+                class="doctor-secondary-button"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- PATIENTS -->
+
+        {% if patients %}
+
+            <div class="doctor-patients-list">
+
+                {% for patient in patients %}
+
+                    <a
+                        href="/doctor/patients/{{ patient.patient_id }}/"
+                        class="doctor-patient-card"
+                    >
+
+                        <div class="doctor-patient-avatar">
+
+                            {{ patient.user.first_name|first|default:patient.user.username|first|upper }}
+
+                        </div>
+
+
+                        <div class="doctor-patient-details">
+
+                            <h2>
+                                {{ patient.user.get_full_name|default:patient.user.username }}
+                            </h2>
+
+                            <p>
+                                {{ patient.user.email|default:"No email provided" }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="doctor-patient-card-arrow">
+                            →
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            {% include "includes/empty_state.html" with
+                title="No patients found"
+                message="Patients associated with your account will appear here."
+                action_url="/doctor/"
+                action_text="Back to Dashboard"
+            %}
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

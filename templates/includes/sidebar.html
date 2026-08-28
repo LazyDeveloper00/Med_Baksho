@@ -1,0 +1,41 @@
+<aside class="sidebar">
+
+    <div class="sidebar-header">
+        <span class="sidebar-title">{{ nav.role_display|default:"Menu" }}</span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        {% if nav.role == "patient" %}
+
+            <a href="/patient/dashboard/" class="sidebar-link">Dashboard</a>
+            <a href="/patient/diseases/" class="sidebar-link">My Diseases</a>
+            <a href="/patient/prescriptions/" class="sidebar-link">Prescriptions</a>
+            <a href="/patient/search/" class="sidebar-link">Search Records</a>
+            <a href="/patient/medicine-submissions/" class="sidebar-link">Medicine Submissions</a>
+            <a href="/patient/chatbot/" class="sidebar-link">Record Assistant</a>
+            <a href="/notifications/" class="sidebar-link">Notifications</a>
+            <a href="/profile/" class="sidebar-link">Profile</a>
+
+        {% elif nav.role == "doctor" %}
+
+            <a href="/doctor/dashboard/" class="sidebar-link">Dashboard</a>
+            <a href="/profile/" class="sidebar-link">Professional Profile</a>
+            <a href="/doctor/availability/" class="sidebar-link">My Availability</a>
+            <a href="/notifications/" class="sidebar-link">Notifications</a>
+
+        {% elif nav.role == "admin" %}
+
+            <a href="/admin-panel/dashboard/" class="sidebar-link">Dashboard</a>
+            <a href="/admin-panel/users/" class="sidebar-link">Users</a>
+            <a href="/admin-panel/doctors/pending/" class="sidebar-link">Doctor Approvals</a>
+            <a href="/admin-panel/medicines/pending/" class="sidebar-link">Medicine Approvals</a>
+            <a href="/admin-panel/master-data/" class="sidebar-link">Master Data</a>
+            <a href="/admin-panel/activity/" class="sidebar-link">Activity Logs</a>
+            <a href="/notifications/" class="sidebar-link">Notifications</a>
+
+        {% endif %}
+
+    </nav>
+
+</aside>

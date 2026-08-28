@@ -1,0 +1,71 @@
+{% extends "app_base.html" %}
+
+{% block title %}Medicine Approvals | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Administrator</p>
+    <h1>Medicine Approvals</h1>
+    <p>Approve or reject patient-submitted medicines.</p>
+</div>
+
+{% if submissions %}
+    {% for s in submissions %}
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ s.proposed_medicine_name }}</h2>
+            {% include "includes/status_badge.html" with status="Pending" %}
+        </div>
+        <div class="detail-list" style="margin-bottom:1rem;">
+            <div class="detail-item"><span>Patient</span><strong>{{ s.patient.user.full_name }}</strong></div>
+            <div class="detail-item"><span>Proposed brand</span><strong>{{ s.med_brand_name|default:"—" }}</strong></div>
+            <div class="detail-item"><span>Active ingredient</span><strong>{{ s.proposed_active_ingredient|default:"—" }}</strong></div>
+            <div class="detail-item"><span>Submitted</span><strong>{{ s.submitted_at|date:"d M Y" }}</strong></div>
+        </div>
+
+        <form method="POST" action="/admin-panel/medicines/pending/">
+            {% csrf_token %}
+            <input type="hidden" name="submission_id" value="{{ s.submission_id }}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Medicine type <span class="required-star">*</span> <span class="muted">(for approval)</span></label>
+                    <select name="med_type_id">
+                        <option value="">Select a type</option>
+                        {% for t in medicine_types %}
+                        <option value="{{ t.med_type_id }}">{{ t.med_type_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Existing brand</label>
+                    <select name="brand_id">
+                        <option value="">Use submitted / new brand</option>
+                        {% for b in brands %}
+                        <option value="{{ b.brand_id }}">{{ b.brand_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>New brand name</label>
+                    <input type="text" name="brand_name" placeholder="Optional">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Comments</label>
+                <input type="text" name="comments" placeholder="Recommended for rejection">
+            </div>
+            <div class="btn-row">
+                <button type="submit" name="decision" value="approve" class="btn btn-success">Approve</button>
+                <button type="submit" name="decision" value="reject" class="btn btn-danger">Reject</button>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="card">
+    {% include "includes/empty_state.html" with title="No pending submissions" message="All medicine submissions have been reviewed." %}
+</div>
+{% endif %}
+
+{% endblock %}

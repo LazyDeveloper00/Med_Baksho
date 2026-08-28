@@ -1,0 +1,39 @@
+<header class="site-header">
+    <nav class="navbar container">
+
+        <!-- Logo -->
+        <a href="/" class="brand">
+            <span class="brand-mark">+</span>
+            <span class="brand-name">MediBaksho</span>
+        </a>
+
+        {% if nav.authenticated %}
+
+            <!-- Logged-in navigation -->
+            <div class="nav-links">
+                <a href="{% if nav.role == 'patient' %}/patient/dashboard/{% elif nav.role == 'doctor' %}/doctor/dashboard/{% else %}/admin-panel/dashboard/{% endif %}">Dashboard</a>
+                <a href="/notifications/">Notifications</a>
+                <a href="/profile/">{{ nav.full_name|default:"Profile" }}</a>
+            </div>
+
+            <a href="/logout/" class="nav-cta">
+                Logout
+            </a>
+
+        {% else %}
+
+            <!-- Public navigation -->
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/doctors/availability/">Doctors</a>
+                <a href="/login/">Login</a>
+            </div>
+
+            <a href="/register/patient/" class="nav-cta">
+                Get Started
+            </a>
+
+        {% endif %}
+
+    </nav>
+</header>

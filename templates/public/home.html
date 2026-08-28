@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}MediBaksho | Your Medical Records, Organized{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+
+<!-- ================================
+     HERO SECTION
+     ================================ -->
+
+<section class="home-hero">
+
+    <div class="home-hero-container">
+
+        <!-- Left Side -->
+        <div class="home-hero-content">
+
+            <p class="home-eyebrow">
+                YOUR DIGITAL MEDICAL ARCHIVE
+            </p>
+
+            <h1>
+                Your medical records,
+                <span>all in one place.</span>
+            </h1>
+
+            <p class="home-hero-description">
+                Keep your diseases, prescriptions, medicines,
+                medical tests, and prescription images organized
+                in one secure medical archive.
+            </p>
+
+            <div class="home-hero-actions">
+                <a href="/register/patient/" class="home-primary-btn">
+                    Get Started
+                    <span>→</span>
+                </a>
+
+                <a href="/doctors/availability/" class="home-secondary-btn">
+                    Find a Doctor
+                </a>
+            </div>
+
+            <p class="home-login-text">
+                Already have an account?
+                <a href="/login/">Login here</a>
+            </p>
+
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="home-hero-visual">
+
+            <div class="medical-card">
+
+                <div class="medical-card-top">
+                    <div>
+                        <span class="medical-card-label">
+                            MEDICAL RECORD
+                        </span>
+
+                        <h3>MediBaksho</h3>
+                    </div>
+
+                    <div class="medical-card-icon">
+                        +
+                    </div>
+                </div>
+
+                <div class="medical-card-line"></div>
+
+                <div class="medical-card-items">
+
+                    <div class="medical-card-item">
+                        <span class="item-icon">+</span>
+                        <div>
+                            <strong>Diseases</strong>
+                            <small>Organized records</small>
+                        </div>
+                    </div>
+
+                    <div class="medical-card-item">
+                        <span class="item-icon">Rx</span>
+                        <div>
+                            <strong>Prescriptions</strong>
+                            <small>Medical history</small>
+                        </div>
+                    </div>
+
+                    <div class="medical-card-item">
+                        <span class="item-icon">✓</span>
+                        <div>
+                            <strong>Medical Tests</strong>
+                            <small>Test information</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="medical-card-footer">
+                    <span>Medical Archive</span>
+                    <span>●</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     WHAT IS MEDIBAKSHO
+     ================================ -->
+
+<section class="home-intro">
+
+    <div class="home-section-container">
+
+        <div class="home-section-heading">
+
+            <p class="home-eyebrow">
+                MEDIBAKSHO
+            </p>
+
+            <h2>
+                Everything important about
+                your medical history.
+            </h2>
+
+            <p>
+                MediBaksho is designed to help patients keep
+                important medical information organized and
+                easier to access when needed.
+            </p>
+
+        </div>
+
+
+        <div class="home-feature-grid">
+
+            <article class="home-feature-card">
+
+                <div class="home-feature-number">
+                    01
+                </div>
+
+                <h3>
+                    Disease Records
+                </h3>
+
+                <p>
+                    Keep track of your diagnosed diseases,
+                    diagnosis dates, current status, and notes.
+                </p>
+
+            </article>
+
+
+            <article class="home-feature-card">
+
+                <div class="home-feature-number">
+                    02
+                </div>
+
+                <h3>
+                    Prescriptions
+                </h3>
+
+                <p>
+                    Store prescription information including
+                    medicines, tests, advice, notes, and
+                    prescription images.
+                </p>
+
+            </article>
+
+
+            <article class="home-feature-card">
+
+                <div class="home-feature-number">
+                    03
+                </div>
+
+                <h3>
+                    Medical Search
+                </h3>
+
+                <p>
+                    Search your stored prescriptions using
+                    diseases, medicines, tests, and facilities.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     ROLES
+     ================================ -->
+
+<section class="home-roles">
+
+    <div class="home-section-container">
+
+        <div class="home-section-heading centered">
+
+            <p class="home-eyebrow">
+                WHO IS IT FOR?
+            </p>
+
+            <h2>
+                One platform, three roles.
+            </h2>
+
+            <p>
+                MediBaksho provides different features
+                depending on your role.
+            </p>
+
+        </div>
+
+
+        <div class="home-role-grid">
+
+            <!-- Patient -->
+            <article class="home-role-card patient-card">
+
+                <div class="home-role-icon">
+                    P
+                </div>
+
+                <h3>
+                    Patient
+                </h3>
+
+                <p>
+                    Manage your medical records, prescriptions,
+                    diseases, medicine submissions, searches,
+                    notifications, and record assistant.
+                </p>
+
+                <a href="/register/patient/" class="home-role-link">
+                    Register as Patient
+                    <span>→</span>
+                </a>
+
+            </article>
+
+
+            <!-- Doctor -->
+            <article class="home-role-card doctor-card">
+
+                <div class="home-role-icon">
+                    D
+                </div>
+
+                <h3>
+                    Doctor
+                </h3>
+
+                <p>
+                    Create your professional profile and
+                    manage your availability after administrator
+                    approval.
+                </p>
+
+                <a href="/register/doctor/" class="home-role-link">
+                    Register as Doctor
+                    <span>→</span>
+                </a>
+
+            </article>
+
+
+            <!-- Administrator -->
+            <article class="home-role-card admin-card">
+
+                <div class="home-role-icon">
+                    A
+                </div>
+
+                <h3>
+                    Administrator
+                </h3>
+
+                <p>
+                    Manage users, approve doctors and medicines,
+                    maintain master data, and review activity.
+                </p>
+
+                <a href="/login/" class="home-role-link">
+                    Administrator Login
+                    <span>→</span>
+                </a>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     DOCTOR CTA
+     ================================ -->
+
+<section class="home-doctor-section">
+
+    <div class="home-section-container">
+
+        <div class="home-doctor-card">
+
+            <div class="home-doctor-content">
+
+                <p class="home-eyebrow">
+                    FIND A DOCTOR
+                </p>
+
+                <h2>
+                    Looking for an approved doctor?
+                </h2>
+
+                <p>
+                    Browse available doctors, their expertise,
+                    workplaces, visiting times, and fees.
+                </p>
+
+                <a
+                    href="/doctors/availability/"
+                    class="home-primary-btn"
+                >
+                    View Doctor Availability
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <div class="home-doctor-symbol">
+                <span>+</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     IMPORTANT DISCLAIMER
+     ================================ -->
+
+<section class="home-disclaimer-section">
+
+    <div class="home-section-container">
+
+        <div class="home-disclaimer">
+
+            <div class="home-disclaimer-icon">
+                !
+            </div>
+
+            <div>
+
+                <h3>
+                    Important information
+                </h3>
+
+                <p>
+                    The MediBaksho record assistant summarizes
+                    stored medical records. It does not diagnose,
+                    prescribe medicine, recommend dosage, or
+                    replace a doctor.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================
+     FINAL CTA
+     ================================ -->
+
+<section class="home-final-cta">
+
+    <div class="home-section-container">
+
+        <div class="home-final-content">
+
+            <p class="home-eyebrow">
+                GET STARTED
+            </p>
+
+            <h2>
+                Keep your medical history organized.
+            </h2>
+
+            <p>
+                Start building your personal medical archive
+                with MediBaksho.
+            </p>
+
+            <div class="home-final-actions">
+
+                <a
+                    href="/register/patient/"
+                    class="home-primary-btn"
+                >
+                    Create Patient Account
+                    <span>→</span>
+                </a>
+
+                <a
+                    href="/login/"
+                    class="home-final-login"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

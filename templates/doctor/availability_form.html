@@ -1,0 +1,39 @@
+{% extends "app_base.html" %}
+
+{% block title %}{% if mode == "edit" %}Edit{% else %}Add{% endif %} Availability | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Doctor</p>
+    <h1>{% if mode == "edit" %}Edit Availability{% else %}Add Availability{% endif %}</h1>
+</div>
+
+<div class="card" style="max-width:620px;">
+    {% if form.non_field_errors %}
+        <div class="form-error-summary">
+            {% for error in form.non_field_errors %}<p class="mb-0">{{ error }}</p>{% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% if mode == 'edit' %}/doctor/availability/{{ slot.availability_id }}/edit/{% else %}/doctor/availability/add/{% endif %}">
+        {% csrf_token %}
+        {% include "includes/field.html" with field=form.available_date label="Date" required=True %}
+        <div class="form-row">
+            {% include "includes/field.html" with field=form.start_time label="Start time" required=True %}
+            {% include "includes/field.html" with field=form.end_time label="End time" required=True %}
+        </div>
+        {% include "includes/field.html" with field=form.visiting_fee label="Visiting fee (৳)" required=True %}
+        {% if mode == "edit" %}
+        <div class="form-group">
+            <label style="font-weight:400;">{{ form.is_active }} Slot is active</label>
+        </div>
+        {% endif %}
+        <div class="btn-row">
+            <button type="submit" class="btn btn-primary">{% if mode == "edit" %}Update Slot{% else %}Add Slot{% endif %}</button>
+            <a href="/doctor/availability/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

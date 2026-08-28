@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Medical Record Details | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-records.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <!-- HEADER -->
+
+        <div class="patient-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    MEDICAL ARCHIVE
+                </p>
+
+                <h1>
+                    Medical Record
+                </h1>
+
+                <p>
+                    View the complete information saved
+                    in this medical record.
+                </p>
+
+            </div>
+
+            <a
+                href="/patient/records/"
+                class="patient-primary-button"
+            >
+                ← Back to Records
+            </a>
+
+        </div>
+
+
+        <!-- BASIC INFORMATION -->
+
+        <section class="record-detail-section">
+
+            <div class="record-section-heading">
+
+                <p class="section-label">
+                    RECORD INFORMATION
+                </p>
+
+                <h2>
+                    Basic Information
+                </h2>
+
+            </div>
+
+
+            <div class="record-detail-card">
+
+                <div class="record-detail-row">
+
+                    <span>
+                        Title
+                    </span>
+
+                    <strong>
+                        {{ record.title|default:"Medical Record" }}
+                    </strong>
+
+                </div>
+
+
+                {% if record.record_type %}
+
+                <div class="record-detail-row">
+
+                    <span>
+                        Record Type
+                    </span>
+
+                    <strong>
+                        {{ record.record_type }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if record.record_date %}
+
+                <div class="record-detail-row">
+
+                    <span>
+                        Record Date
+                    </span>
+
+                    <strong>
+                        {{ record.record_date|date:"d M Y" }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if record.doctor_name %}
+
+                <div class="record-detail-row">
+
+                    <span>
+                        Doctor
+                    </span>
+
+                    <strong>
+                        {{ record.doctor_name }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if record.facility_name %}
+
+                <div class="record-detail-row">
+
+                    <span>
+                        Facility
+                    </span>
+
+                    <strong>
+                        {{ record.facility_name }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- DESCRIPTION -->
+
+        {% if record.description %}
+
+        <section class="record-detail-section">
+
+            <div class="record-section-heading">
+
+                <p class="section-label">
+                    DESCRIPTION
+                </p>
+
+                <h2>
+                    Details
+                </h2>
+
+            </div>
+
+
+            <div class="record-detail-text">
+
+                {{ record.description|linebreaks }}
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- NOTES -->
+
+        {% if record.notes %}
+
+        <section class="record-detail-section">
+
+            <div class="record-section-heading">
+
+                <p class="section-label">
+                    NOTES
+                </p>
+
+                <h2>
+                    Additional Notes
+                </h2>
+
+            </div>
+
+
+            <div class="record-detail-text">
+
+                {{ record.notes|linebreaks }}
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- DOCUMENT -->
+
+        {% if record.file %}
+
+        <section class="record-detail-section">
+
+            <div class="record-section-heading">
+
+                <p class="section-label">
+                    DOCUMENT
+                </p>
+
+                <h2>
+                    Attached File
+                </h2>
+
+            </div>
+
+
+            <div class="record-file-card">
+
+                <div>
+
+                    <span class="record-file-icon">
+                        +
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Medical Record Document
+                        </strong>
+
+                        <small>
+                            Attached to this record
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="{{ record.file.url }}"
+                    target="_blank"
+                    rel="noopener"
+                    class="record-file-button"
+                >
+                    Open File →
+                </a>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- ACTIONS -->
+
+        <div class="record-detail-actions">
+
+            <a
+                href="/patient/records/{{ record.record_id }}/edit/"
+                class="patient-primary-button"
+            >
+                Edit Record
+            </a>
+
+
+            <form
+                method="POST"
+                action="/patient/records/{{ record.record_id }}/delete/"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="record-delete-button"
+                    onclick="return confirm('Are you sure you want to delete this medical record?');"
+                >
+                    Delete Record
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

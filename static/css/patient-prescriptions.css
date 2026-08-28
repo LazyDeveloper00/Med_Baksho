@@ -1,0 +1,797 @@
+/* =========================================================
+   PATIENT PRESCRIPTIONS
+   ========================================================= */
+
+.patient-page {
+    min-height: 75vh;
+
+    padding: 70px 0 100px;
+
+    background: #f6fbf7;
+}
+
+.patient-page-container {
+    width: min(1100px, calc(100% - 48px));
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.patient-page-header {
+    margin-bottom: 35px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.page-eyebrow {
+    margin-bottom: 9px;
+
+    color: #3c8068;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+.patient-page-header h1 {
+    margin-bottom: 10px;
+
+    color: #174c3b;
+
+    font-size: clamp(2.3rem, 5vw, 3.7rem);
+
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+}
+
+.patient-page-header p:last-child {
+    max-width: 650px;
+
+    color: #718078;
+
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.patient-primary-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #174c3b;
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.patient-primary-button:hover {
+    background: #10392c;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PRESCRIPTION LIST
+   ========================================================= */
+
+.prescription-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   PRESCRIPTION CARD
+   ========================================================= */
+
+.prescription-card {
+    padding: 20px;
+
+    display: grid;
+    grid-template-columns: 65px 1fr auto;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.prescription-card:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 28px rgba(23, 76, 59, 0.06);
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.prescription-date {
+    width: 58px;
+    min-height: 70px;
+
+    padding: 7px 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #e5f1e9;
+
+    border-radius: 11px;
+
+    text-align: center;
+}
+
+.prescription-date span {
+    color: #4d8069;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.prescription-date strong {
+    margin: 1px 0;
+
+    color: #174c3b;
+
+    font-size: 1.25rem;
+
+    line-height: 1;
+}
+
+.prescription-date small {
+    color: #789083;
+
+    font-size: 0.58rem;
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.prescription-information {
+    min-width: 0;
+}
+
+.prescription-title-row {
+    margin-bottom: 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.prescription-title-row h2 {
+    color: #315a4a;
+
+    font-size: 0.98rem;
+}
+
+.prescription-created {
+    color: #9aa49f;
+
+    font-size: 0.65rem;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+   ========================================================= */
+
+.prescription-details-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+
+    gap: 10px 25px;
+}
+
+.prescription-detail {
+    min-width: 0;
+}
+
+.prescription-detail span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #929c97;
+
+    font-size: 0.65rem;
+}
+
+.prescription-detail strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #405a4e;
+
+    font-size: 0.76rem;
+
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.prescription-action {
+    flex-shrink: 0;
+}
+
+.prescription-action a {
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    background: #f1f7f3;
+    color: #315f4e;
+
+    border-radius: 8px;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.prescription-action a:hover {
+    background: #e4f1e9;
+}
+
+.prescription-action span {
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .prescription-card {
+        grid-template-columns: 58px 1fr;
+
+        align-items: start;
+    }
+
+    .prescription-action {
+        grid-column: 2;
+    }
+
+    .prescription-action a {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .patient-page {
+        padding: 55px 0 75px;
+    }
+
+    .patient-page-container {
+        width: calc(100% - 28px);
+    }
+
+    .patient-page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .patient-primary-button {
+        width: 100%;
+    }
+
+    .prescription-card {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .prescription-date {
+        width: 65px;
+    }
+
+    .prescription-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prescription-action {
+        grid-column: auto;
+    }
+}/* =========================================================
+   PRESCRIPTION DETAIL
+   ========================================================= */
+
+.prescription-detail-section {
+    margin-bottom: 35px;
+}
+
+.prescription-section-heading {
+    margin-bottom: 15px;
+}
+
+.prescription-section-heading h2 {
+    color: #315a4a;
+    font-size: 1.25rem;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+   ========================================================= */
+
+.prescription-info-card {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+}
+
+.prescription-info-row {
+    padding: 16px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 25px;
+
+    border-bottom: 1px solid #e7eee9;
+}
+
+.prescription-info-row:first-child {
+    padding-top: 0;
+}
+
+.prescription-info-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.prescription-info-row span {
+    color: #89958f;
+    font-size: 0.76rem;
+}
+
+.prescription-info-row strong {
+    max-width: 65%;
+
+    color: #315a4a;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   DETAIL BOX
+   ========================================================= */
+
+.prescription-detail-box,
+.prescription-empty-box {
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+
+    color: #52645d;
+
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.prescription-empty-box {
+    color: #929c97;
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+.prescription-images {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.prescription-image-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 14px;
+}
+
+.prescription-image-card img {
+    width: 100%;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.prescription-detail-actions {
+    margin-top: 10px;
+    padding-top: 25px;
+
+    display: flex;
+
+    gap: 10px;
+
+    border-top: 1px solid #dce9e2;
+}
+
+.prescription-detail-actions form {
+    margin: 0;
+}
+
+.prescription-delete-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    background: #fff1f0;
+    color: #a33a32;
+
+    border: 1px solid #f0c4c0;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.prescription-delete-button:hover {
+    background: #fde5e3;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .prescription-info-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .prescription-info-row strong {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .prescription-images {
+        grid-template-columns: 1fr;
+    }
+
+    .prescription-detail-actions {
+        flex-direction: column;
+    }
+
+    .prescription-detail-actions .patient-primary-button,
+    .prescription-delete-button {
+        width: 100%;
+    }
+}/* =========================================================
+   PRESCRIPTION FORM
+   ========================================================= */
+
+.prescription-form-card {
+    max-width: 900px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(23, 76, 59, 0.04);
+}
+
+.prescription-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 35px;
+}
+
+
+/* =========================================================
+   FORM SECTION
+   ========================================================= */
+
+.prescription-form-section {
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #e7eee9;
+}
+
+.prescription-form-section:last-of-type {
+    border-bottom: none;
+}
+
+.prescription-form-heading {
+    margin-bottom: 20px;
+}
+
+.prescription-form-heading h2 {
+    color: #315a4a;
+
+    font-size: 1.2rem;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.prescription-form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.prescription-form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.prescription-form-group label,
+.prescription-upload label {
+    color: #41584e;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.prescription-form-group input,
+.prescription-form-group select,
+.prescription-form-group textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5e2db;
+    border-radius: 9px;
+
+    color: #30483e;
+
+    font-family: inherit;
+    font-size: 0.83rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.prescription-form-group input,
+.prescription-form-group select {
+    height: 46px;
+}
+
+.prescription-form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.prescription-form-group input::placeholder,
+.prescription-form-group textarea::placeholder {
+    color: #a0aaa5;
+}
+
+.prescription-form-group input:focus,
+.prescription-form-group select:focus,
+.prescription-form-group textarea:focus {
+    border-color: #4d9274;
+
+    box-shadow:
+        0 0 0 3px rgba(77, 146, 116, 0.1);
+}
+
+
+/* =========================================================
+   UPLOAD
+   ========================================================= */
+
+.prescription-upload {
+    padding: 25px;
+
+    background: #f7fbf8;
+
+    border: 1px dashed #b9d1c3;
+    border-radius: 12px;
+}
+
+.prescription-upload label {
+    display: block;
+
+    margin-bottom: 10px;
+}
+
+.prescription-upload input {
+    width: 100%;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5e2db;
+    border-radius: 8px;
+
+    color: #52645d;
+
+    font-family: inherit;
+    font-size: 0.78rem;
+}
+
+.prescription-upload p {
+    margin-top: 8px;
+
+    color: #929c97;
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.prescription-form-actions {
+    padding-top: 5px;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+.prescription-cancel-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f5f2;
+    color: #52645d;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.prescription-cancel-button:hover {
+    background: #e7eee9;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .prescription-form-card {
+        padding: 22px;
+    }
+
+    .prescription-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prescription-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .prescription-form-actions .patient-primary-button,
+    .prescription-cancel-button {
+        width: 100%;
+    }
+}

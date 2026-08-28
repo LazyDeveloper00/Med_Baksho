@@ -1,0 +1,452 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Add Prescription | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-prescriptions.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <!-- HEADER -->
+
+        <div class="patient-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    MEDICAL RECORD
+                </p>
+
+                <h1>
+                    Add Prescription
+                </h1>
+
+                <p>
+                    Save prescription information and
+                    related medical documents to your archive.
+                </p>
+
+            </div>
+
+            <a
+                href="/patient/prescriptions/"
+                class="patient-primary-button"
+            >
+                ← Back to Prescriptions
+            </a>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="prescription-form-card">
+
+            {% include "includes/form_errors.html" %}
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="prescription-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- ================================
+                     BASIC INFORMATION
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            BASIC INFORMATION
+                        </p>
+
+                        <h2>
+                            Prescription Information
+                        </h2>
+
+                    </div>
+
+
+                    <div class="prescription-form-grid">
+
+
+                        <!-- Prescription Date -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="prescription_date">
+                                Prescription Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="prescription_date"
+                                name="prescription_date"
+                                value="{{ request.POST.prescription_date|default:'' }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Doctor -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="doctor_name">
+                                Doctor Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="doctor_name"
+                                name="doctor_name"
+                                value="{{ request.POST.doctor_name|default:'' }}"
+                                placeholder="Enter doctor's name"
+                            >
+
+                        </div>
+
+
+                        <!-- Disease -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="patient_disease_id">
+                                Disease
+                            </label>
+
+                            <select
+                                id="patient_disease_id"
+                                name="patient_disease_id"
+                            >
+
+                                <option value="">
+                                    Select disease
+                                </option>
+
+                                {% for disease in patient_diseases %}
+
+                                    <option
+                                        value="{{ disease.patient_disease_id }}"
+                                        {% if request.POST.patient_disease_id == disease.patient_disease_id|stringformat:"s" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {% if disease.disease %}
+                                            {{ disease.disease.disease_name }}
+                                        {% else %}
+                                            {{ disease.custom_disease_name }}
+                                        {% endif %}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Facility -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="facility_id">
+                                Facility
+                            </label>
+
+                            <select
+                                id="facility_id"
+                                name="facility_id"
+                            >
+
+                                <option value="">
+                                    Select facility
+                                </option>
+
+                                {% for facility in facilities %}
+
+                                    <option
+                                        value="{{ facility.facility_id }}"
+                                        {% if request.POST.facility_id == facility.facility_id|stringformat:"s" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ facility.facility_name }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Custom Facility -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="custom_facility_name">
+                                Other Facility
+                            </label>
+
+                            <input
+                                type="text"
+                                id="custom_facility_name"
+                                name="custom_facility_name"
+                                value="{{ request.POST.custom_facility_name|default:'' }}"
+                                placeholder="If not listed above"
+                            >
+
+                        </div>
+
+
+                        <!-- Illness Location -->
+
+                        <div class="prescription-form-group">
+
+                            <label for="illness_location">
+                                Illness Location
+                            </label>
+
+                            <input
+                                type="text"
+                                id="illness_location"
+                                name="illness_location"
+                                value="{{ request.POST.illness_location|default:'' }}"
+                                placeholder="e.g. Head, chest, stomach"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     MEDICINES
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            MEDICATION
+                        </p>
+
+                        <h2>
+                            Medicines
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="medicines">
+                            Medicine Details
+                        </label>
+
+                        <textarea
+                            id="medicines"
+                            name="medicines"
+                            rows="6"
+                            placeholder="Enter medicine names, dosage, frequency, duration, etc."
+                        >{{ request.POST.medicines|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     TESTS
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            MEDICAL TESTS
+                        </p>
+
+                        <h2>
+                            Tests
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="tests">
+                            Test Information
+                        </label>
+
+                        <textarea
+                            id="tests"
+                            name="tests"
+                            rows="5"
+                            placeholder="Enter any recommended or completed tests..."
+                        >{{ request.POST.tests|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     ADVICE
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            DOCTOR'S ADVICE
+                        </p>
+
+                        <h2>
+                            Advice
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="advice">
+                            Doctor's Advice
+                        </label>
+
+                        <textarea
+                            id="advice"
+                            name="advice"
+                            rows="5"
+                            placeholder="Enter the doctor's instructions or advice..."
+                        >{{ request.POST.advice|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     NOTES
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            NOTES
+                        </p>
+
+                        <h2>
+                            Additional Notes
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-form-group">
+
+                        <label for="additional_notes">
+                            Additional Notes
+                        </label>
+
+                        <textarea
+                            id="additional_notes"
+                            name="additional_notes"
+                            rows="5"
+                            placeholder="Add anything else you want to remember..."
+                        >{{ request.POST.additional_notes|default:'' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     PRESCRIPTION IMAGE
+                     ================================ -->
+
+                <div class="prescription-form-section">
+
+                    <div class="prescription-form-heading">
+
+                        <p class="section-label">
+                            DOCUMENT
+                        </p>
+
+                        <h2>
+                            Prescription Image
+                        </h2>
+
+                    </div>
+
+                    <div class="prescription-upload">
+
+                        <label for="prescription_image">
+                            Upload prescription image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="prescription_image"
+                            name="prescription_image"
+                            accept="image/png,image/jpeg,image/webp"
+                        >
+
+                        <p>
+                            Upload a clear image of the prescription.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="prescription-form-actions">
+
+                    <a
+                        href="/patient/prescriptions/"
+                        class="prescription-cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="patient-primary-button"
+                    >
+                        Save Prescription
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

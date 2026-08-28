@@ -1,0 +1,298 @@
+/* =========================================================
+   DOCTOR PATIENT DETAIL
+   ========================================================= */
+
+.doctor-page {
+    min-height: 75vh;
+
+    padding: 70px 0 100px;
+
+    background: #f6fbf7;
+}
+
+.doctor-page-container {
+    width: min(1050px, calc(100% - 48px));
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.doctor-page-header {
+    margin-bottom: 35px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.doctor-page-header h1 {
+    margin-bottom: 10px;
+
+    color: #174c3b;
+
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+
+    line-height: 1.05;
+    letter-spacing: -1.7px;
+}
+
+.doctor-page-header p:last-child {
+    color: #718078;
+
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.doctor-secondary-button {
+    min-height: 44px;
+
+    padding: 0 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+    color: #52645d;
+
+    border: 1px solid #dce9e2;
+    border-radius: 9px;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.doctor-secondary-button:hover {
+    background: #f1f7f3;
+}
+
+
+/* =========================================================
+   PATIENT PROFILE
+   ========================================================= */
+
+.doctor-patient-profile-card {
+    margin-bottom: 45px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 17px;
+
+    overflow: hidden;
+}
+
+.doctor-patient-profile-header {
+    padding: 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    background: #f7fbf8;
+
+    border-bottom: 1px solid #e4eee8;
+}
+
+.doctor-patient-large-avatar {
+    width: 68px;
+    height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #dceee4;
+    color: #174c3b;
+
+    border-radius: 50%;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.doctor-patient-profile-header h2 {
+    margin-bottom: 5px;
+
+    color: #315a4a;
+
+    font-size: 1.2rem;
+}
+
+.doctor-patient-profile-header p {
+    color: #89958f;
+
+    font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   PATIENT INFORMATION
+   ========================================================= */
+
+.doctor-patient-information {
+    padding: 5px 28px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+.doctor-patient-information > div {
+    padding: 18px 0;
+}
+
+.doctor-patient-information span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #929c97;
+
+    font-size: 0.68rem;
+}
+
+.doctor-patient-information strong {
+    color: #315a4a;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   DETAIL SECTIONS
+   ========================================================= */
+
+.doctor-detail-section {
+    margin-bottom: 38px;
+}
+
+.doctor-section-heading {
+    margin-bottom: 16px;
+}
+
+.doctor-section-heading h2 {
+    color: #315a4a;
+
+    font-size: 1.2rem;
+}
+
+
+/* =========================================================
+   DETAIL LIST
+   ========================================================= */
+
+.doctor-detail-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.doctor-detail-item {
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 12px;
+}
+
+.doctor-detail-item strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #315a4a;
+
+    font-size: 0.8rem;
+}
+
+.doctor-detail-item span {
+    color: #929c97;
+
+    font-size: 0.66rem;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.doctor-empty-card {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 12px;
+
+    color: #929c97;
+
+    font-size: 0.75rem;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .doctor-page {
+        padding: 55px 0 75px;
+    }
+
+    .doctor-page-container {
+        width: calc(100% - 28px);
+    }
+
+    .doctor-page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .doctor-page-header .doctor-secondary-button {
+        width: 100%;
+    }
+
+    .doctor-patient-information {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+    .doctor-patient-profile-header {
+        padding: 22px;
+    }
+
+    .doctor-patient-information {
+        padding: 5px 22px;
+    }
+
+}

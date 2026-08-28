@@ -1,0 +1,28 @@
+{% extends "app_base.html" %}
+
+{% block title %}Notifications | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Account</p>
+    <h1>Notifications</h1>
+    <p>Approval and rejection updates related to your account.</p>
+</div>
+
+<div class="card">
+    {% if events %}
+    <div class="stack">
+        {% for event in events %}
+        <div class="notice">
+            <p class="mb-0">{{ event.message }}</p>
+            <p class="muted mb-0" style="font-size:0.8rem;">{{ event.created_at }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        {% include "includes/empty_state.html" with title="No notifications" message="You have no notifications right now." %}
+    {% endif %}
+</div>
+
+{% endblock %}

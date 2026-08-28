@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    My Profile | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <div class="patient-page-header">
+
+            <div>
+                <p class="page-eyebrow">
+                    ACCOUNT
+                </p>
+
+                <h1>
+                    My Profile
+                </h1>
+
+                <p>
+                    View and manage your personal information.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-card-header">
+
+                <div class="profile-avatar">
+                    {{ user.first_name|first|default:user.username|first|upper }}
+                </div>
+
+                <div>
+                    <h2>
+                        {{ user.get_full_name|default:user.username }}
+                    </h2>
+
+                    <p>
+                        Patient Account
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="profile-information">
+
+                <div class="profile-information-item">
+
+                    <span>
+                        Username
+                    </span>
+
+                    <strong>
+                        {{ user.username }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-information-item">
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong>
+                        {{ user.email|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-information-item">
+
+                    <span>
+                        First Name
+                    </span>
+
+                    <strong>
+                        {{ user.first_name|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-information-item">
+
+                    <span>
+                        Last Name
+                    </span>
+
+                    <strong>
+                        {{ user.last_name|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-actions">
+
+                <a
+                    href="/patient/profile/edit/"
+                    class="patient-primary-button"
+                >
+                    Edit Profile
+                </a>
+
+                <a
+                    href="/patient/"
+                    class="profile-secondary-button"
+                >
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

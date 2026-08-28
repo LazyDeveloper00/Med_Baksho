@@ -1,0 +1,799 @@
+/* =========================================================
+   MEDICAL RECORDS
+   ========================================================= */
+
+.patient-page {
+    min-height: 75vh;
+
+    padding: 70px 0 100px;
+
+    background: #f6fbf7;
+}
+
+.patient-page-container {
+    width: min(1100px, calc(100% - 48px));
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.patient-page-header {
+    margin-bottom: 35px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.page-eyebrow {
+    margin-bottom: 9px;
+
+    color: #3c8068;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+.patient-page-header h1 {
+    margin-bottom: 10px;
+
+    color: #174c3b;
+
+    font-size: clamp(2.3rem, 5vw, 3.7rem);
+
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+}
+
+.patient-page-header p:last-child {
+    max-width: 650px;
+
+    color: #718078;
+
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.patient-primary-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #174c3b;
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.patient-primary-button:hover {
+    background: #10392c;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RECORD LIST
+   ========================================================= */
+
+.medical-record-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   RECORD CARD
+   ========================================================= */
+
+.medical-record-card {
+    padding: 20px;
+
+    display: grid;
+
+    grid-template-columns: 55px 1fr auto;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.medical-record-card:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 28px rgba(23, 76, 59, 0.06);
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.medical-record-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e5f1e9;
+    color: #174c3b;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.medical-record-information {
+    min-width: 0;
+}
+
+.medical-record-title-row {
+    margin-bottom: 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.medical-record-title-row h2 {
+    color: #315a4a;
+
+    font-size: 0.98rem;
+}
+
+.medical-record-title-row span {
+    color: #929c97;
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   META
+   ========================================================= */
+
+.medical-record-meta {
+    display: flex;
+
+    gap: 35px;
+
+    flex-wrap: wrap;
+}
+
+.medical-record-meta div {
+    min-width: 100px;
+}
+
+.medical-record-meta small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #929c97;
+
+    font-size: 0.64rem;
+}
+
+.medical-record-meta strong {
+    display: block;
+
+    color: #405a4e;
+
+    font-size: 0.76rem;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.medical-record-action {
+    flex-shrink: 0;
+}
+
+.medical-record-action a {
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f7f3;
+    color: #315f4e;
+
+    border-radius: 8px;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.medical-record-action a:hover {
+    background: #e4f1e9;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 750px) {
+
+    .medical-record-card {
+        grid-template-columns: 52px 1fr;
+    }
+
+    .medical-record-action {
+        grid-column: 2;
+    }
+
+    .medical-record-action a {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .patient-page {
+        padding: 55px 0 75px;
+    }
+
+    .patient-page-container {
+        width: calc(100% - 28px);
+    }
+
+    .patient-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .patient-page-header .patient-primary-button {
+        width: 100%;
+    }
+
+    .medical-record-card {
+        grid-template-columns: 1fr;
+    }
+
+    .medical-record-action {
+        grid-column: auto;
+    }
+
+    .medical-record-meta {
+        flex-direction: column;
+        gap: 12px;
+    }
+}/* =========================================================
+   MEDICAL RECORD DETAIL
+   ========================================================= */
+
+.record-detail-section {
+    margin-bottom: 35px;
+}
+
+.record-section-heading {
+    margin-bottom: 15px;
+}
+
+.record-section-heading h2 {
+    color: #315a4a;
+    font-size: 1.2rem;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+   ========================================================= */
+
+.record-detail-card {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+}
+
+.record-detail-row {
+    padding: 16px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 25px;
+
+    border-bottom: 1px solid #e7eee9;
+}
+
+.record-detail-row:first-child {
+    padding-top: 0;
+}
+
+.record-detail-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.record-detail-row span {
+    color: #89958f;
+    font-size: 0.76rem;
+}
+
+.record-detail-row strong {
+    max-width: 65%;
+
+    color: #315a4a;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+.record-detail-text {
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+
+    color: #52645d;
+
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FILE
+   ========================================================= */
+
+.record-file-card {
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 15px;
+}
+
+.record-file-card > div {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.record-file-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e5f1e9;
+    color: #174c3b;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+}
+
+.record-file-card strong {
+    display: block;
+
+    color: #315a4a;
+
+    font-size: 0.8rem;
+}
+
+.record-file-card small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #929c97;
+
+    font-size: 0.65rem;
+}
+
+.record-file-button {
+    min-height: 38px;
+
+    padding: 0 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f7f3;
+    color: #315f4e;
+
+    border-radius: 8px;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.record-file-button:hover {
+    background: #e4f1e9;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.record-detail-actions {
+    padding-top: 25px;
+
+    display: flex;
+
+    gap: 10px;
+
+    border-top: 1px solid #dce9e2;
+}
+
+.record-detail-actions form {
+    margin: 0;
+}
+
+.record-delete-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    background: #fff1f0;
+    color: #a33a32;
+
+    border: 1px solid #f0c4c0;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.record-delete-button:hover {
+    background: #fde5e3;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .record-detail-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .record-detail-row strong {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .record-file-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .record-file-button {
+        width: 100%;
+    }
+
+    .record-detail-actions {
+        flex-direction: column;
+    }
+
+    .record-detail-actions .patient-primary-button,
+    .record-delete-button {
+        width: 100%;
+    }
+}/* =========================================================
+   MEDICAL RECORD FORM
+   ========================================================= */
+
+.record-form-card {
+    max-width: 900px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(23, 76, 59, 0.04);
+}
+
+.record-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 35px;
+}
+
+
+/* =========================================================
+   FORM SECTIONS
+   ========================================================= */
+
+.record-form-section {
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #e7eee9;
+}
+
+.record-form-section:last-of-type {
+    border-bottom: none;
+}
+
+.record-form-heading {
+    margin-bottom: 20px;
+}
+
+.record-form-heading h2 {
+    color: #315a4a;
+
+    font-size: 1.2rem;
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.record-form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.record-form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.record-form-group label,
+.record-upload label {
+    color: #41584e;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.record-form-group input,
+.record-form-group select,
+.record-form-group textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5e2db;
+    border-radius: 9px;
+
+    color: #30483e;
+
+    font-family: inherit;
+    font-size: 0.83rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.record-form-group input,
+.record-form-group select {
+    height: 46px;
+}
+
+.record-form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.record-form-group input::placeholder,
+.record-form-group textarea::placeholder {
+    color: #a0aaa5;
+}
+
+.record-form-group input:focus,
+.record-form-group select:focus,
+.record-form-group textarea:focus {
+    border-color: #4d9274;
+
+    box-shadow:
+        0 0 0 3px rgba(77, 146, 116, 0.1);
+}
+
+
+/* =========================================================
+   FILE UPLOAD
+   ========================================================= */
+
+.record-upload {
+    padding: 25px;
+
+    background: #f7fbf8;
+
+    border: 1px dashed #b9d1c3;
+    border-radius: 12px;
+}
+
+.record-upload label {
+    display: block;
+
+    margin-bottom: 10px;
+}
+
+.record-upload input {
+    width: 100%;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5e2db;
+    border-radius: 8px;
+
+    color: #52645d;
+
+    font-family: inherit;
+    font-size: 0.78rem;
+}
+
+.record-upload p {
+    margin-top: 8px;
+
+    color: #929c97;
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.record-form-actions {
+    padding-top: 5px;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+.record-cancel-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f5f2;
+    color: #52645d;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.record-cancel-button:hover {
+    background: #e7eee9;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .record-form-card {
+        padding: 22px;
+    }
+
+    .record-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .record-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .record-form-actions .patient-primary-button,
+    .record-cancel-button {
+        width: 100%;
+    }
+}

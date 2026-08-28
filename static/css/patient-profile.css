@@ -1,0 +1,313 @@
+/* =========================================================
+   PATIENT PROFILE
+   ========================================================= */
+
+.profile-card {
+    max-width: 850px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(23, 76, 59, 0.04);
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+   ========================================================= */
+
+.profile-card-header {
+    padding: 30px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    background: #f7fbf8;
+
+    border-bottom: 1px solid #e4eee8;
+}
+
+.profile-avatar {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #dceee4;
+    color: #174c3b;
+
+    border-radius: 50%;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.profile-card-header h2 {
+    margin-bottom: 5px;
+
+    color: #315a4a;
+
+    font-size: 1.15rem;
+}
+
+.profile-card-header p {
+    color: #89958f;
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.profile-information {
+    padding: 10px 30px;
+}
+
+.profile-information-item {
+    padding: 19px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e7eee9;
+}
+
+.profile-information-item:last-child {
+    border-bottom: none;
+}
+
+.profile-information-item span {
+    color: #89958f;
+
+    font-size: 0.76rem;
+}
+
+.profile-information-item strong {
+    color: #315a4a;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.profile-actions {
+    padding: 25px 30px;
+
+    display: flex;
+
+    gap: 10px;
+
+    border-top: 1px solid #e4eee8;
+}
+
+.profile-secondary-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f5f2;
+    color: #52645d;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.profile-secondary-button:hover {
+    background: #e7eee9;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .profile-card-header {
+        padding: 22px;
+    }
+
+    .profile-information {
+        padding: 5px 22px;
+    }
+
+    .profile-information-item {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 6px;
+    }
+
+    .profile-information-item strong {
+        text-align: left;
+    }
+
+    .profile-actions {
+        padding: 22px;
+
+        flex-direction: column;
+    }
+
+    .profile-actions a {
+        width: 100%;
+    }
+}/* =========================================================
+   PROFILE EDIT
+   ========================================================= */
+
+.profile-edit-form {
+    width: 100%;
+}
+
+.profile-edit-section {
+    padding: 30px;
+}
+
+.profile-edit-heading {
+    margin-bottom: 25px;
+}
+
+.profile-edit-heading h2 {
+    color: #315a4a;
+    font-size: 1.2rem;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.profile-edit-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+.profile-form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.profile-form-group label {
+    color: #41584e;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.profile-form-group input {
+    width: 100%;
+    height: 46px;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5e2db;
+    border-radius: 9px;
+
+    color: #30483e;
+
+    font-family: inherit;
+    font-size: 0.83rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.profile-form-group input::placeholder {
+    color: #a0aaa5;
+}
+
+.profile-form-group input:focus {
+    border-color: #4d9274;
+
+    box-shadow:
+        0 0 0 3px rgba(77, 146, 116, 0.1);
+}
+
+.profile-full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.profile-edit-actions {
+    padding: 25px 30px;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    border-top: 1px solid #e4eee8;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .profile-edit-section {
+        padding: 22px;
+    }
+
+    .profile-edit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-full-width {
+        grid-column: auto;
+    }
+
+    .profile-edit-actions {
+        padding: 22px;
+
+        flex-direction: column-reverse;
+    }
+
+    .profile-edit-actions a,
+    .profile-edit-actions button {
+        width: 100%;
+    }
+}

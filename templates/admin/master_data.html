@@ -1,0 +1,120 @@
+{% extends "app_base.html" %}
+{% block title %}Master Data | MediBaksho{% endblock %}
+{% block app_content %}
+<div class="page-head">
+    <p class="eyebrow">Administrator</p>
+    <h1>Master Data</h1>
+    <p>Manage the drop-down data used throughout MediBaksho.</p>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2>Add Disease</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="disease">
+            <label>Disease name</label><input class="form-control" name="disease_name" required>
+            <button class="btn btn-primary" type="submit">Add Disease</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Facility Type</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="facility-type">
+            <label>Facility type</label><input class="form-control" name="facility_type_name" required>
+            <button class="btn btn-primary" type="submit">Add Facility Type</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Medical Facility</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="facility">
+            <label>Facility name</label><input class="form-control" name="facility_name" required>
+            <label>Facility type</label><select class="form-control" name="facility_type_id" required>
+                {% for x in facility_types %}<option value="{{ x.facility_type_id }}">{{ x.facility_type_name }}</option>{% endfor %}
+            </select>
+            <button class="btn btn-primary" type="submit">Add Facility</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Medicine Brand</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="medicine-brand">
+            <label>Brand name</label><input class="form-control" name="brand_name" required>
+            <button class="btn btn-primary" type="submit">Add Brand</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Medicine Type</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="medicine-type">
+            <label>Medicine type</label><input class="form-control" name="med_type_name" required>
+            <button class="btn btn-primary" type="submit">Add Type</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Medicine</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="medicine">
+            <label>Medicine name</label><input class="form-control" name="medicine_name" required>
+            <label>Active ingredient</label><input class="form-control" name="main_active_ingredient">
+            <label>Brand</label><select class="form-control" name="brand_id" required>
+                {% for x in medicine_brands %}<option value="{{ x.brand_id }}">{{ x.brand_name }}</option>{% endfor %}
+            </select>
+            <label>Type</label><select class="form-control" name="med_type_id" required>
+                {% for x in medicine_types %}<option value="{{ x.med_type_id }}">{{ x.med_type_name }}</option>{% endfor %}
+            </select>
+            <button class="btn btn-primary" type="submit">Add Medicine</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Test Category</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="test-category">
+            <label>Category name</label><input class="form-control" name="category_name" required>
+            <button class="btn btn-primary" type="submit">Add Category</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Add Medical Test</h2>
+        <form method="POST">{% csrf_token %}
+            <input type="hidden" name="action" value="create"><input type="hidden" name="entity" value="medical-test">
+            <label>Test name</label><input class="form-control" name="test_name" required>
+            <label>Category</label><select class="form-control" name="category_id" required>
+                {% for x in test_categories %}<option value="{{ x.category_id }}">{{ x.category_name }}</option>{% endfor %}
+            </select>
+            <label>Description</label><textarea class="form-control" name="description" rows="3"></textarea>
+            <button class="btn btn-primary" type="submit">Add Test</button>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Current Diseases</h2>
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    {% for x in diseases %}<tr><td>{{ x.disease_name }}</td><td>{{ x.is_active|yesno:"Active,Inactive" }}</td><td>
+        <form method="POST" class="inline-form">{% csrf_token %}<input type="hidden" name="action" value="toggle"><input type="hidden" name="entity" value="disease"><input type="hidden" name="object_id" value="{{ x.disease_id }}"><input type="hidden" name="is_active" value="{% if x.is_active %}false{% else %}true{% endif %}"><button class="btn btn-sm" type="submit">{% if x.is_active %}Deactivate{% else %}Activate{% endif %}</button></form>
+    </td></tr>{% empty %}<tr><td colspan="3">No diseases.</td></tr>{% endfor %}
+    </tbody></table></div>
+</div>
+
+<div class="card">
+    <h2>Facilities</h2>
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Type</th><th>Status</th></tr></thead><tbody>
+    {% for x in facilities %}<tr><td>{{ x.facility_name }}</td><td>{{ x.facility_type.facility_type_name }}</td><td>{{ x.is_active|yesno:"Active,Inactive" }}</td></tr>{% empty %}<tr><td colspan="3">No facilities.</td></tr>{% endfor %}
+    </tbody></table></div>
+</div>
+
+<div class="card">
+    <h2>Medicines</h2>
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Brand</th><th>Type</th><th>Status</th></tr></thead><tbody>
+    {% for x in medicines %}<tr><td>{{ x.medicine_name }}</td><td>{{ x.med_brand.brand_name }}</td><td>{{ x.med_type.med_type_name }}</td><td>{{ x.is_active|yesno:"Active,Inactive" }}</td></tr>{% empty %}<tr><td colspan="4">No medicines.</td></tr>{% endfor %}
+    </tbody></table></div>
+</div>
+
+<div class="card">
+    <h2>Medical Tests</h2>
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Category</th><th>Status</th></tr></thead><tbody>
+    {% for x in medical_tests %}<tr><td>{{ x.test_name }}</td><td>{{ x.category.category_name }}</td><td>{{ x.is_active|yesno:"Active,Inactive" }}</td></tr>{% empty %}<tr><td colspan="3">No tests.</td></tr>{% endfor %}
+    </tbody></table></div>
+</div>
+{% endblock %}

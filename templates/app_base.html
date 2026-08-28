@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% comment %}
+Shared layout for all logged-in pages: top navbar (from base) + left sidebar
++ main content. Role pages override the `app_content` block.
+{% endcomment %}
+
+{% block content %}
+<div class="app-shell">
+
+    {% include "includes/sidebar.html" %}
+
+    <main class="app-main">
+        {% block app_content %}{% endblock %}
+    </main>
+
+</div>
+{% endblock %}

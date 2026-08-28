@@ -1,0 +1,48 @@
+{% extends "app_base.html" %}
+
+{% block title %}Medicine Submissions | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Records</p>
+    <h1>Medicine Submissions</h1>
+    <p>Unlisted medicines you have proposed for administrator review.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>My Submissions</h2>
+        <a href="/patient/medicine-submissions/add/" class="btn btn-primary btn-sm">Submit Medicine</a>
+    </div>
+
+    {% if submissions %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Proposed medicine</th><th>Brand</th><th>Active ingredient</th>
+                    <th>Status</th><th>Submitted</th><th>Reviewed</th><th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in submissions %}
+                <tr>
+                    <td>{{ s.proposed_medicine_name }}</td>
+                    <td>{{ s.med_brand_name|default:"—" }}</td>
+                    <td>{{ s.proposed_active_ingredient|default:"—" }}</td>
+                    <td>{% include "includes/status_badge.html" with status=s.status %}</td>
+                    <td>{{ s.submitted_at|date:"d M Y" }}</td>
+                    <td>{{ s.reviewed_at|date:"d M Y"|default:"—" }}</td>
+                    <td>{{ s.review_comments|default:"—" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        {% include "includes/empty_state.html" with title="No submissions yet" message="Propose a medicine that is not yet in the system." action_url="/patient/medicine-submissions/add/" action_text="Submit Medicine" %}
+    {% endif %}
+</div>
+
+{% endblock %}

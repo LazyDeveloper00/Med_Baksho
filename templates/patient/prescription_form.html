@@ -1,0 +1,198 @@
+{% extends "app_base.html" %}
+
+{% block title %}Add Prescription | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Records</p>
+    <h1>Add Prescription</h1>
+    <p>Record a prescription with optional medicines, tests, and a PNG image.</p>
+</div>
+
+{% if not patient_diseases %}
+<div class="notice" style="margin-bottom:1.25rem;">
+    You need at least one disease record first.
+    <a href="/patient/diseases/add/">Add a disease</a> to continue.
+</div>
+{% endif %}
+
+<form method="POST" action="/patient/prescriptions/add/" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="card">
+        <h2>Prescription Details</h2>
+
+        <div class="form-group">
+            <label for="patient_disease_id">Disease this prescription is for <span class="required-star">*</span></label>
+            <select id="patient_disease_id" name="patient_disease_id" required>
+                <option value="">Select a disease record</option>
+                {% for pd in patient_diseases %}
+                <option value="{{ pd.patient_disease_id }}" {% if form_data.patient_disease_id == pd.patient_disease_id|stringformat:"s" %}selected{% endif %}>
+                    {{ pd.disease.disease_name }}{% if pd.custom_disease_name %} ({{ pd.custom_disease_name }}){% endif %}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="prescription_date">Prescription date <span class="required-star">*</span></label>
+                <input type="date" id="prescription_date" name="prescription_date" value="{{ form_data.prescription_date }}" required>
+            </div>
+            <div class="form-group">
+                <label for="doctor_name">Doctor name <span class="required-star">*</span></label>
+                <input type="text" id="doctor_name" name="doctor_name" value="{{ form_data.doctor_name }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="facility_id">Facility</label>
+                <select id="facility_id" name="facility_id">
+                    <option value="">Select a facility</option>
+                    {% for f in facilities %}
+                    <option value="{{ f.facility_id }}" {% if form_data.facility_id == f.facility_id|stringformat:"s" %}selected{% endif %}>{{ f.facility_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="custom_facility_name">Or custom facility name</label>
+                <input type="text" id="custom_facility_name" name="custom_facility_name" value="{{ form_data.custom_facility_name }}" placeholder="If not listed above">
+            </div>
+        </div>
+        <p class="form-hint">Provide either a facility from the list or a custom facility name.</p>
+
+        <div class="form-group">
+            <label for="illness_location">Illness location</label>
+            <input type="text" id="illness_location" name="illness_location" value="{{ form_data.illness_location }}">
+        </div>
+        <div class="form-group">
+            <label for="advice">Advice</label>
+            <textarea id="advice" name="advice">{{ form_data.advice }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="additional_notes">Additional notes</label>
+            <textarea id="additional_notes" name="additional_notes">{{ form_data.additional_notes }}</textarea>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Medicines <span class="muted" style="font-weight:400;">(optional, up to 5)</span></h2>
+        <p class="form-hint">Fill a row only if you select a medicine. Dosage, times/day and duration are required for a selected medicine.</p>
+        {% for i in row_indexes %}
+        <fieldset class="row-block">
+            <legend>Medicine {{ forloop.counter }}</legend>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Medicine</label>
+                    <select name="medicine-{{ i }}-medicine_id">
+                        <option value="">None</option>
+                        {% for m in medicines %}
+                        <option value="{{ m.medicine_id }}">{{ m.medicine_name }} — {{ m.med_brand.brand_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Dosage</label>
+                    <input type="text" name="medicine-{{ i }}-dosage" placeholder="e.g. 500mg">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Times per day</label>
+                    <input type="number" min="1" name="medicine-{{ i }}-times_per_day">
+                </div>
+                <div class="form-group">
+                    <label>Duration (days)</label>
+                    <input type="number" min="1" name="medicine-{{ i }}-duration_days">
+                </div>
+                <div class="form-group">
+                    <label>Effectiveness</label>
+                    <input type="text" name="medicine-{{ i }}-effectiveness" placeholder="Unknown">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Start date</label>
+                    <input type="date" name="medicine-{{ i }}-start_date">
+                </div>
+                <div class="form-group">
+                    <label>End date</label>
+                    <input type="date" name="medicine-{{ i }}-end_date">
+                </div>
+                <div class="form-group">
+                    <label>Course completed</label>
+                    <label style="font-weight:400;"><input type="checkbox" style="width:auto;" name="medicine-{{ i }}-course_completed" value="1"> Yes</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Side effects</label>
+                <input type="text" name="medicine-{{ i }}-side_effects">
+            </div>
+        </fieldset>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h2>Medical Tests <span class="muted" style="font-weight:400;">(optional, up to 5)</span></h2>
+        {% for i in row_indexes %}
+        <fieldset class="row-block">
+            <legend>Test {{ forloop.counter }}</legend>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Test</label>
+                    <select name="test-{{ i }}-test_id">
+                        <option value="">None</option>
+                        {% for t in tests %}
+                        <option value="{{ t.test_id }}">{{ t.test_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="test-{{ i }}-completion_status">
+                        <option value="Recommended">Recommended</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Test date</label>
+                    <input type="date" name="test-{{ i }}-test_date">
+                </div>
+                <div class="form-group">
+                    <label>Diagnostic center</label>
+                    <input type="text" name="test-{{ i }}-diagnostic_center_name">
+                </div>
+                <div class="form-group">
+                    <label>Custom test name</label>
+                    <input type="text" name="test-{{ i }}-custom_test_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Result summary</label>
+                <input type="text" name="test-{{ i }}-result_summary">
+            </div>
+        </fieldset>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h2>Prescription Image</h2>
+        <p class="form-hint">PNG only, up to the configured size limit. JPG, JPEG, PDF and DOCX are not accepted.</p>
+        <div class="form-group">
+            <label for="image">PNG image</label>
+            <input type="file" id="image" name="image" accept="image/png">
+        </div>
+    </div>
+
+    <div class="btn-row">
+        <button type="submit" class="btn btn-primary" {% if not patient_diseases %}disabled{% endif %}>Save Prescription</button>
+        <a href="/patient/prescriptions/" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Add Disease | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-diseases.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <!-- Header -->
+
+        <div class="patient-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    MEDICAL HISTORY
+                </p>
+
+                <h1>
+                    Add Disease
+                </h1>
+
+                <p>
+                    Add a disease or medical condition
+                    to your medical archive.
+                </p>
+
+            </div>
+
+            <a
+                href="/patient/diseases/"
+                class="patient-primary-button"
+            >
+                ← Back to Diseases
+            </a>
+
+        </div>
+
+
+        <!-- Form -->
+
+        <div class="disease-form-card">
+
+            {% include "includes/form_errors.html" %}
+
+            <form
+                method="POST"
+                action=""
+                class="disease-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- Disease Name -->
+
+                <div class="disease-form-group">
+
+                    <label for="name">
+                        Disease / Condition
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ request.POST.name|default:'' }}"
+                        placeholder="Enter disease or condition"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="disease-form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="5"
+                        placeholder="Add any useful information about this condition..."
+                    >{{ request.POST.description|default:'' }}</textarea>
+
+                </div>
+
+
+                <!-- Diagnosed Date -->
+
+                <div class="disease-form-group">
+
+                    <label for="diagnosed_date">
+                        Diagnosed Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="diagnosed_date"
+                        name="diagnosed_date"
+                        value="{{ request.POST.diagnosed_date|default:'' }}"
+                    >
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="disease-form-actions">
+
+                    <a
+                        href="/patient/diseases/"
+                        class="disease-cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="patient-primary-button"
+                    >
+                        Save Disease
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

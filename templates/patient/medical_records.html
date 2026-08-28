@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Medical Records | MediBaksho
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient-records.css' %}">
+<link rel="stylesheet" href="{% static 'css/patient-ai.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-page">
+
+    <div class="patient-page-container">
+
+        <!-- HEADER -->
+
+        <div class="patient-page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    MEDICAL ARCHIVE
+                </p>
+
+                <h1>
+                    Medical Records
+                </h1>
+
+                <p>
+                    View and manage the medical records
+                    saved in your archive.
+                </p>
+
+            </div>
+
+            <a
+                href="/patient/records/add/"
+                class="patient-primary-button"
+            >
+                + Add Record
+            </a>
+
+        </div>
+
+
+        <!-- RECORDS -->
+
+        {% if records %}
+
+            <div class="medical-record-list">
+
+                {% for record in records %}
+
+                    <article class="medical-record-card">
+
+                        <div class="medical-record-icon">
+                            +
+                        </div>
+
+
+                        <div class="medical-record-information">
+
+                            <div class="medical-record-title-row">
+
+                                <h2>
+                                    {{ record.title|default:"Medical Record" }}
+                                </h2>
+
+                                {% if record.record_date %}
+
+                                    <span>
+                                        {{ record.record_date|date:"d M Y" }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="medical-record-meta">
+
+                                {% if record.record_type %}
+
+                                    <div>
+                                        <small>
+                                            Type
+                                        </small>
+
+                                        <strong>
+                                            {{ record.record_type }}
+                                        </strong>
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if record.doctor_name %}
+
+                                    <div>
+                                        <small>
+                                            Doctor
+                                        </small>
+
+                                        <strong>
+                                            {{ record.doctor_name }}
+                                        </strong>
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if record.facility_name %}
+
+                                    <div>
+                                        <small>
+                                            Facility
+                                        </small>
+
+                                        <strong>
+                                            {{ record.facility_name }}
+                                        </strong>
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medical-record-action">
+
+                            <a
+                                href="/patient/records/{{ record.record_id }}/"
+                            >
+                                View Details →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            {% include "includes/empty_state.html" with
+                title="No medical records yet"
+                message="Your medical records will appear here after you add your first record."
+                action_url="/patient/records/add/"
+                action_text="Add Medical Record"
+            %}
+
+        {% endif %}
+
+    </div>
+
+</section>
+<section class="patient-ai-section patient-ai-compact">
+
+    <div class="patient-ai-header">
+        <p class="page-eyebrow">MEDIBAKSHO AI</p>
+
+        <h2>Ask About Your Medical Records</h2>
+
+        <p>
+            Ask questions about information stored in your medical records.
+        </p>
+    </div>
+
+    <form class="patient-ai-form" method="POST" action="/api/chatbot/ask/">
+
+        {% csrf_token %}
+
+        <textarea
+            name="question"
+            maxlength="500"
+            placeholder="Ask something about your medical records..."
+            required
+        ></textarea>
+
+        <button type="submit">
+            Ask AI
+        </button>
+
+    </form>
+
+</section>
+{% endblock %}

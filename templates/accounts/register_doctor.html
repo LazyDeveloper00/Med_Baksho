@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Doctor Registration | MediBaksho{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+    <div class="auth-container">
+
+        <div class="auth-intro">
+            <p class="auth-eyebrow">DOCTOR ACCOUNT</p>
+            <h1>Join the <span>doctor network.</span></h1>
+            <p>
+                Create your professional MediBaksho account. Your account requires
+                administrator approval before doctor features become available.
+            </p>
+            <div class="auth-feature-list">
+                <div class="auth-feature">
+                    <span>D</span>
+                    <div><strong>Professional Profile</strong><p>Add your licence, degree, expertise, and workplace.</p></div>
+                </div>
+                <div class="auth-feature">
+                    <span>✓</span>
+                    <div><strong>Administrator Approval</strong><p>Doctor accounts are reviewed before access is enabled.</p></div>
+                </div>
+                <div class="auth-feature">
+                    <span>+</span>
+                    <div><strong>Availability</strong><p>Add visiting times and fees after approval.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-card-header">
+                <p class="auth-card-label">MEDIBAKSHO</p>
+                <h2>Doctor Registration</h2>
+                <p>Submit your professional information.</p>
+            </div>
+
+            {% include "includes/form_errors.html" %}
+
+            <form method="POST" action="/register/doctor/" class="auth-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="full_name">Full Name <span class="required-star">*</span></label>
+                    <input type="text" id="full_name" name="full_name" value="{{ form.full_name.value|default:'' }}" autocomplete="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span class="required-star">*</span></label>
+                    <input type="email" id="email" name="email" value="{{ form.email.value|default:'' }}" autocomplete="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" value="{{ form.phone.value|default:'' }}" autocomplete="tel">
+                </div>
+                <div class="form-group">
+                    <label for="licence_number">Licence Number <span class="required-star">*</span></label>
+                    <input type="text" id="licence_number" name="licence_number" value="{{ form.licence_number.value|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="degree">Degree</label>
+                    <input type="text" id="degree" name="degree" value="{{ form.degree.value|default:'' }}" placeholder="e.g. MBBS, FCPS">
+                </div>
+                <div class="form-group">
+                    <label for="field_of_expertise">Field of Expertise</label>
+                    <input type="text" id="field_of_expertise" name="field_of_expertise" value="{{ form.field_of_expertise.value|default:'' }}" placeholder="e.g. Cardiology">
+                </div>
+                <div class="form-group">
+                    <label for="workplace">Workplace</label>
+                    <input type="text" id="workplace" name="workplace" value="{{ form.workplace.value|default:'' }}" placeholder="Hospital / Clinic">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password <span class="required-star">*</span></label>
+                    <input type="password" id="password" name="password" autocomplete="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password <span class="required-star">*</span></label>
+                    <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" required>
+                </div>
+
+                <button type="submit" class="auth-submit">Submit Registration <span>→</span></button>
+            </form>
+
+            <div class="auth-divider"><span>OR</span></div>
+            <div class="auth-register">
+                <p>Already have an account?</p>
+                <div class="auth-register-links">
+                    <a href="/login/">Login</a>
+                    <a href="/register/patient/">Register as Patient</a>
+                </div>
+            </div>
+            <div class="auth-back"><a href="/">← Back to home</a></div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

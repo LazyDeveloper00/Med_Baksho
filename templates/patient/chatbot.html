@@ -1,0 +1,50 @@
+{% extends "app_base.html" %}
+
+{% block title %}Record Assistant | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">MediBaksho AI</p>
+    <h1>Ask about my stored medical records</h1>
+</div>
+
+<div class="disclaimer" style="margin-bottom:1.25rem;">
+    This tool only summarizes your stored records. It does not diagnose, prescribe
+    medicine, recommend dosage, or replace a doctor.
+</div>
+
+<div class="card">
+
+    {% if question or answer %}
+    <div class="chat-thread">
+        {% if question %}<div class="chat-bubble question">{{ question }}</div>{% endif %}
+        {% if answer %}<div class="chat-bubble answer">{{ answer }}</div>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if form.question.errors %}
+        <div class="form-error-summary">
+            {% for error in form.question.errors %}<p class="mb-0">{{ error }}</p>{% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- The browser never calls the AI provider directly. This POST goes to the
+         Django web view -> ChatbotProxy -> ChatbotService -> HuggingFaceStrategy. -->
+    <form method="POST" action="/patient/chatbot/">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_question">Your question <span class="required-star">*</span></label>
+            <textarea id="id_question" name="question" maxlength="500" required
+                placeholder="e.g. Which diseases do I have on record?">{{ question|default:"" }}</textarea>
+            <p class="char-counter">Maximum 500 characters.</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Ask Mediবাক্স</button>
+    </form>
+</div>
+
+<p class="muted" style="font-size:0.85rem;">
+    The assistant can answer questions about your stored diseases and prescriptions only.
+</p>
+
+{% endblock %}

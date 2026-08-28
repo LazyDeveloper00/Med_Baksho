@@ -1,0 +1,280 @@
+/* =========================================================
+   DISEASE DETAIL
+   ========================================================= */
+
+.disease-detail-card {
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(23, 76, 59, 0.04);
+}
+
+.disease-detail-icon {
+    width: 60px;
+    height: 60px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e5f1e9;
+    color: #174c3b;
+
+    border-radius: 14px;
+
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.disease-detail-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.disease-detail-row {
+    padding: 18px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    border-bottom: 1px solid #e7eee9;
+}
+
+.disease-detail-row:first-child {
+    padding-top: 0;
+}
+
+.disease-detail-row span {
+    color: #89958f;
+
+    font-size: 0.78rem;
+}
+
+.disease-detail-row strong {
+    max-width: 65%;
+
+    color: #315a4a;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    text-align: right;
+    line-height: 1.6;
+}
+
+.disease-detail-actions {
+    margin-top: 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.disease-detail-actions form {
+    margin: 0;
+}
+
+.disease-delete-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    background: #fff1f0;
+    color: #a33a32;
+
+    border: 1px solid #f0c4c0;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.disease-delete-button:hover {
+    background: #fde5e3;
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .disease-detail-card {
+        padding: 22px;
+    }
+
+    .disease-detail-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .disease-detail-row strong {
+        max-width: 100%;
+
+        text-align: left;
+    }
+
+    .disease-detail-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .disease-detail-actions .patient-primary-button,
+    .disease-delete-button {
+        width: 100%;
+    }
+}
+/* =========================================================
+   DISEASE FORM
+   ========================================================= */
+
+.disease-form-card {
+    max-width: 750px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce9e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(23, 76, 59, 0.04);
+}
+
+.disease-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+}
+
+.disease-form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.disease-form-group label {
+    color: #41584e;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.disease-form-group input,
+.disease-form-group textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5e2db;
+    border-radius: 9px;
+
+    color: #30483e;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.disease-form-group input {
+    height: 46px;
+}
+
+.disease-form-group textarea {
+    min-height: 130px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.disease-form-group input::placeholder,
+.disease-form-group textarea::placeholder {
+    color: #a0aaa5;
+}
+
+.disease-form-group input:focus,
+.disease-form-group textarea:focus {
+    border-color: #4d9274;
+
+    box-shadow:
+        0 0 0 3px rgba(77, 146, 116, 0.1);
+}
+
+
+/* Form actions */
+
+.disease-form-actions {
+    padding-top: 8px;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    border-top: 1px solid #e7eee9;
+}
+
+.disease-cancel-button {
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f5f2;
+    color: #52645d;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.disease-cancel-button:hover {
+    background: #e7eee9;
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .disease-form-card {
+        padding: 22px;
+    }
+
+    .disease-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .disease-form-actions .patient-primary-button,
+    .disease-cancel-button {
+        width: 100%;
+    }
+}

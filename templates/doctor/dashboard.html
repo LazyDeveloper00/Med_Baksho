@@ -1,0 +1,68 @@
+{% extends "app_base.html" %}
+
+{% block title %}Doctor Dashboard | MediBaksho{% endblock %}
+
+{% block app_content %}
+
+<div class="page-head">
+    <p class="eyebrow">Doctor</p>
+    <h1>Welcome, Dr. {{ nav.full_name }}</h1>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Verification Status</h2>
+        {% include "includes/status_badge.html" with status=doctor.verification_status %}
+    </div>
+    {% if doctor.verification_status == "Pending" %}
+        <div class="notice">Your account is pending administrator approval. You can view your
+        profile and notifications, but availability management is disabled until you are approved.</div>
+    {% elif doctor.verification_status == "Rejected" %}
+        <div class="disclaimer">Your registration was rejected. Please check your
+        <a href="/notifications/">notifications</a> for the reason.</div>
+    {% else %}
+        <p class="muted mb-0">Your account is approved. You can manage your availability and visiting fees.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Professional Profile</h2>
+    <div class="detail-list">
+        <div class="detail-item"><span>Licence number</span><strong>{{ doctor.licence_number }}</strong></div>
+        <div class="detail-item"><span>Degree</span><strong>{{ doctor.degree|default:"Not provided" }}</strong></div>
+        <div class="detail-item"><span>Expertise</span><strong>{{ doctor.field_of_expertise|default:"Not provided" }}</strong></div>
+        <div class="detail-item"><span>Workplace</span><strong>{{ doctor.workplace|default:"Not provided" }}</strong></div>
+    </div>
+    <div class="btn-row" style="margin-top:1rem;">
+        <a href="/profile/" class="btn btn-secondary btn-sm">Edit Profile</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Upcoming Availability</h2>
+        {% if is_approved %}<a href="/doctor/availability/" class="btn btn-primary btn-sm">Manage</a>{% endif %}
+    </div>
+    {% if upcoming %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead><tr><th>Date</th><th>Time</th><th>Fee</th></tr></thead>
+            <tbody>
+                {% for slot in upcoming %}
+                <tr>
+                    <td>{{ slot.available_date|date:"d M Y" }}</td>
+                    <td>{{ slot.start_time|time:"H:i" }} – {{ slot.end_time|time:"H:i" }}</td>
+                    <td>৳{{ slot.visiting_fee }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% elif is_approved %}
+        {% include "includes/empty_state.html" with title="No upcoming slots" message="Add availability so patients can find you." action_url="/doctor/availability/add/" action_text="Add Availability" %}
+    {% else %}
+        <p class="muted mb-0">Availability becomes available after approval.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
